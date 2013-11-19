@@ -6,6 +6,7 @@
 
 package appletexample;
 
+import Main.Main;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import java.awt.*;
@@ -46,6 +47,8 @@ public class Example extends javax.swing.JApplet {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
                     initComponents();
+                    Main createGame=new Main();
+                    createGame.createGame();
                 }
             });
         } catch (Exception ex) {
