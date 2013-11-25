@@ -10,10 +10,12 @@ import Main.Main;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import org.xml.sax.Attributes;
 
-public class Example extends javax.swing.JApplet {
+public class Example extends javax.swing.JApplet implements ActionListener {
 
     /**
      * Initializes the applet Example
@@ -55,7 +57,8 @@ public class Example extends javax.swing.JApplet {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+        jButton4.addActionListener(this);
+        jButton5.addActionListener(this);
     }
     
    
@@ -77,6 +80,7 @@ public class Example extends javax.swing.JApplet {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         jButton5.setText("Lanzar");
 
@@ -122,20 +126,28 @@ public class Example extends javax.swing.JApplet {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/wikipedia.gif"))); // NOI18N
         jLabel4.setText("jLabel4");
 
+        jLabel5.setText("jLabel5");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 325, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(22, 306, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(149, 149, 149)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -170,13 +182,14 @@ public class Example extends javax.swing.JApplet {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        dados tirar = new dados();
+/*        dados tirar = new dados();
         int numDado = tirar.calculaNumero();
         int numDado2 = tirar.calculaNumero();
         int Resultado = numDado+numDado2;
         imagene imagen = new imagene();
-        jLabel2.setIcon(imagen.gifDado(numDado));
-        jLabel1.setText("Espacios a mover: "+Resultado);
+        jLabel5.setIcon(imagen.gifDado(numDado));
+        jLabel5.setText("Espacios a mover: "+Resultado);*/
+       // JOptionPane.showMessageDialog(rootPane,"alerta");
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
@@ -187,7 +200,29 @@ public class Example extends javax.swing.JApplet {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object o = e.getSource();
+        JButton b = null;
+        String buttonText = "";
+
+        if(o instanceof JButton)
+          b = (JButton)o;
+
+        if(b != null)
+            buttonText = b.getText();
+        
+        if (buttonText.equals("Jugar")){
+            dados tirar = new dados();
+            int numDado = tirar.calculaNumero();
+            int numDado2 = tirar.calculaNumero();
+            int Resultado = numDado+numDado2;
+            jLabel5.setText("Espacios a mover: "+Resultado);
+        }
+    }
 }
