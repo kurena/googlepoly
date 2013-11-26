@@ -73,14 +73,230 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        start = new javax.swing.JLabel();
+        wikipedia = new javax.swing.JLabel();
+        LeerCarta = new javax.swing.JLabel();
+        ask = new javax.swing.JLabel();
+        blogspot = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        impuestos = new javax.swing.JLabel();
+        android = new javax.swing.JLabel();
+        parqueo = new javax.swing.JLabel();
+        drupal = new javax.swing.JLabel();
+        carta2 = new javax.swing.JLabel();
+        wordpress = new javax.swing.JLabel();
+        opera = new javax.swing.JLabel();
+        fundacion = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        IE = new javax.swing.JLabel();
+        mozilla = new javax.swing.JLabel();
+        leerCarta = new javax.swing.JLabel();
+        paypal = new javax.swing.JLabel();
+        impuestosArriba = new javax.swing.JLabel();
+        skype = new javax.swing.JLabel();
+        leerCarta2 = new javax.swing.JLabel();
+        jail = new javax.swing.JLabel();
+        eBay = new javax.swing.JLabel();
+        developer = new javax.swing.JLabel();
+        amazon = new javax.swing.JLabel();
+        carta = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+
+        start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/start.gif"))); // NOI18N
+
+        wikipedia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/wikipedia.gif"))); // NOI18N
+
+        LeerCarta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/leerCarta.gif"))); // NOI18N
+
+        ask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ask.gif"))); // NOI18N
+
+        blogspot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/blogspot.gif"))); // NOI18N
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jotspot.gif"))); // NOI18N
+
+        impuestos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impuestos.gif"))); // NOI18N
+
+        android.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/android.gif"))); // NOI18N
+
+        parqueo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/parqueo.gif"))); // NOI18N
+
+        drupal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/drupal.gif"))); // NOI18N
+
+        carta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carta2.gif"))); // NOI18N
+
+        wordpress.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/wordpress.gif"))); // NOI18N
+
+        opera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/opera.gif"))); // NOI18N
+
+        fundacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/funadcion.gif"))); // NOI18N
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/opera.gif"))); // NOI18N
+
+        IE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IE.gif"))); // NOI18N
+
+        mozilla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Mozilla.gif"))); // NOI18N
+
+        leerCarta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Carta3.gif"))); // NOI18N
+
+        paypal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Paypal.gif"))); // NOI18N
+
+        impuestosArriba.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impuestos2.gif"))); // NOI18N
+
+        skype.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Skype.gif"))); // NOI18N
+
+        leerCarta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Carta3.gif"))); // NOI18N
+
+        jail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jail.gif"))); // NOI18N
+
+        eBay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ebay.gif"))); // NOI18N
+
+        developer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Premio2.gif"))); // NOI18N
+
+        amazon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Amazon.gif"))); // NOI18N
+
+        carta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Carta4.gif"))); // NOI18N
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Oracle.gif"))); // NOI18N
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Microsoft.gif"))); // NOI18N
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/drupal.gif"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(92, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(drupal)
+                        .addGap(584, 584, 584)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(parqueo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(android)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blogspot)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(impuestos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ask)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LeerCarta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(wikipedia)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(fundacion)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(IE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(mozilla)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(leerCarta))
+                                    .addComponent(opera))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(paypal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(impuestosArriba)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(skype)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(leerCarta2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(developer)
+                            .addComponent(eBay)
+                            .addComponent(jail)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(wordpress)
+                            .addComponent(carta2)
+                            .addComponent(jLabel7))
+                        .addGap(584, 584, 584)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(amazon)
+                            .addComponent(carta)
+                            .addComponent(jLabel4))))
+                .addGap(0, 5, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fundacion, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(IE, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(mozilla, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(leerCarta, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(paypal, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(impuestosArriba, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(skype, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(leerCarta2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jail, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(eBay))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(opera)
+                    .addComponent(developer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(wordpress)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carta2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(amazon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(carta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(drupal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(wikipedia))
+                            .addComponent(LeerCarta)
+                            .addComponent(ask)
+                            .addComponent(blogspot)
+                            .addComponent(jLabel2)
+                            .addComponent(impuestos)
+                            .addComponent(android)
+                            .addComponent(parqueo))))
+                .addGap(164, 164, 164))
+        );
+
+        jLabel5.setText("Dados:");
 
         jButton5.setText("Lanzar");
 
@@ -90,9 +306,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 jButton4ActionPerformed(evt);
             }
         });
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,55 +317,46 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addGap(32, 32, 32)
                 .addComponent(jButton5)
                 .addGap(86, 86, 86))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton4))
-                .addGap(103, 103, 103))
-        );
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/start.gif"))); // NOI18N
-        jLabel3.setText("jLabel3");
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/wikipedia.gif"))); // NOI18N
-        jLabel4.setText("jLabel4");
-
-        jLabel5.setText("jLabel5");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 325, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(22, 306, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton5))
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jTabbedPane1)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32))
         );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(327, Short.MAX_VALUE))
+        );
+        jLayeredPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,39 +365,54 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addGap(693, 693, 693)
                 .addComponent(jLabel1)
-                .addContainerGap(132, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLayeredPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 59, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-/*        dados tirar = new dados();
+        /*        dados tirar = new dados();
         int numDado = tirar.calculaNumero();
         int numDado2 = tirar.calculaNumero();
         int Resultado = numDado+numDado2;
         imagene imagen = new imagene();
         jLabel5.setIcon(imagen.gifDado(numDado));
         jLabel5.setText("Espacios a mover: "+Resultado);*/
-       // JOptionPane.showMessageDialog(rootPane,"alerta");
+        // JOptionPane.showMessageDialog(rootPane,"alerta");
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IE;
+    private javax.swing.JLabel LeerCarta;
+    private javax.swing.JLabel amazon;
+    private javax.swing.JLabel android;
+    private javax.swing.JLabel ask;
+    private javax.swing.JLabel blogspot;
+    private javax.swing.JLabel carta;
+    private javax.swing.JLabel carta2;
+    private javax.swing.JLabel developer;
+    private javax.swing.JLabel drupal;
+    private javax.swing.JLabel eBay;
+    private javax.swing.JLabel fundacion;
+    private javax.swing.JLabel impuestos;
+    private javax.swing.JLabel impuestosArriba;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -201,8 +420,23 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel jail;
+    private javax.swing.JLabel leerCarta;
+    private javax.swing.JLabel leerCarta2;
+    private javax.swing.JLabel mozilla;
+    private javax.swing.JLabel opera;
+    private javax.swing.JLabel parqueo;
+    private javax.swing.JLabel paypal;
+    private javax.swing.JLabel skype;
+    private javax.swing.JLabel start;
+    private javax.swing.JLabel wikipedia;
+    private javax.swing.JLabel wordpress;
     // End of variables declaration//GEN-END:variables
 
     @Override
