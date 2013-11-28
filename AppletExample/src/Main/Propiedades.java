@@ -20,12 +20,13 @@ public class Propiedades {
     private int renta;
     private String dueño;
     private String nombre;
+    private String tipo;
     
     public Propiedades(){
         
     }
     
-    public Propiedades(int costo, String dueño, int posX, int posY, int cantHoteles, int cantCasas, int hipotecaPrecio, int renta,String nombre){
+    public Propiedades(int costo, String dueño, int posX, int posY, int cantHoteles, int cantCasas, int hipotecaPrecio, int renta,String nombre, String tipo){
         this.costo = costo;
         this.posX = posX;
         this.posY = posY;
@@ -35,6 +36,7 @@ public class Propiedades {
         this.renta = renta;
         this.dueño =dueño;
         this.nombre = nombre;
+        this.tipo = tipo;
     }
     
     public int getPosX(){
