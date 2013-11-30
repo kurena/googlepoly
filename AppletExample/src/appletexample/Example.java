@@ -121,6 +121,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jLabel8 = new javax.swing.JLabel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -285,7 +287,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addContainerGap())
         );
 
-        jInternalFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 180, -1));
+        jInternalFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 180, -1));
 
         jLabel5.setText("Dados:");
         jInternalFrame1.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 192, 44));
@@ -305,6 +307,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jTabbedPane2.addTab("tab2", jTabbedPane3);
 
         jInternalFrame1.getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 120, 170));
+        jInternalFrame1.getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 90, 110));
+        jInternalFrame1.getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 90, 110));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -372,6 +376,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -415,10 +421,24 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         
         if (buttonText.equals("Jugar")){
             dados tirar = new dados();
+            imagene image = new imagene();
             int numDado = tirar.calculaNumero();
             int numDado2 = tirar.calculaNumero();
+            try {
+                animarGif();
+                Thread.sleep(3000);
+            } catch(Exception ex) {
+                
+            }
+            jLabel11.setIcon(image.gifDado(numDado));
+            
+            jLabel12.setIcon(image.gifDado(numDado2));
             int Resultado = numDado+numDado2;
             jLabel5.setText("Espacios a mover: "+Resultado);
         }
+    }
+    public void animarGif(){
+        imagene image = new imagene();
+        jLabel11.setIcon(image.gifDado(0));
     }
 }
