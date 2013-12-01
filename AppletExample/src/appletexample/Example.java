@@ -420,25 +420,36 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             buttonText = b.getText();
         
         if (buttonText.equals("Jugar")){
-            dados tirar = new dados();
-            imagene image = new imagene();
-            int numDado = tirar.calculaNumero();
-            int numDado2 = tirar.calculaNumero();
-            try {
-                animarGif();
-                Thread.sleep(3000);
-            } catch(Exception ex) {
-                
-            }
-            jLabel11.setIcon(image.gifDado(numDado));
+            //Animacion Gif
+            final Timer timer = new Timer(1,new ActionListener(){
+                public void actionPerformed(ActionEvent evt){
+                    imagene image = new imagene();
+                    jLabel11.setIcon(image.gifDado(0));
+                    jLabel12.setIcon(image.gifDado(0));
+                }
+            });
+            //Dados Estaticos Aleatoriamente
+            final Timer timer2 = new Timer(1000,new ActionListener(){
+                public void actionPerformed(ActionEvent evt){
+                    timer.stop();
+                    imagene image = new imagene();
+                    dados tirar = new dados();
+                    int numDado = tirar.calculaNumero();
+                    int numDado2 = tirar.calculaNumero();
+                    jLabel11.setIcon(image.gifDado(numDado));
+                    jLabel12.setIcon(image.gifDado(numDado2));
+                    int Resultado = numDado+numDado2;
+                    jLabel5.setText("Espacios a mover: "+Resultado);
+                }
+            });
+            //Start y delay entre animaciones
+            timer.start();
+            timer2.setInitialDelay(3000);
+            timer2.start();
+            timer2.setRepeats(false);
             
-            jLabel12.setIcon(image.gifDado(numDado2));
-            int Resultado = numDado+numDado2;
-            jLabel5.setText("Espacios a mover: "+Resultado);
+            
         }
     }
-    public void animarGif(){
-        imagene image = new imagene();
-        jLabel11.setIcon(image.gifDado(0));
-    }
+    
 }
