@@ -45,12 +45,13 @@ public class Main {
        this.persona[0].setNombre(Nombre);
        this.persona[1].setNombre(Nombre2);
     }
-    //Obtener nombre del jugador1
-    public String getNameJug1(){
-        return this.persona[0].getNombre();
+    //Obtener nombre de jugadores
+    public String getNameJug(int pos){
+        return this.persona[pos].getNombre();
     }
-    //obtener nombre del jugador2
-    public String getNameJug2(){
-        return this.persona[1].getNombre();
+   
+    // Obtener dinero de jugadores
+    public int obtenerDineroJug(int pos){
+        return this.persona[pos].getDinero();
     }
 }
