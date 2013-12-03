@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
  * @author ACER
  */
 public class Main {
-    
+    //Variable privada de tipo persona
+    private Persona persona[] = new Persona[2];
     public Main() {
         
     }
@@ -27,25 +28,29 @@ public class Main {
         arregloPropiedadades[4] = new Propiedades(0, "", 457,595,0,0,35,10,"IMPUESTOS15", "INPUESTOS15");
         arregloPropiedadades[5] = new Propiedades(0, "", 380,595,0,0,35,10,"Blogspot", "PROPIEDAD");
         
-        Persona persona[] = new Persona[2];
-        persona[0]= new Persona("",0,0,1500);
-        persona[1]= new Persona("",0,0,1500);
-        askNames(persona);   
+        //Se llena la variable con datos estaticos
+        this.persona[0]= new Persona("",0,0,1500);
+        this.persona[1]= new Persona("",0,0,1500);
+        //Llamada al metodo para solicitar nombres
+        askNames(this.persona);   
     }
-    
+    //Solicitar nombres
     public void askNames(Persona persona[]){
        String nombre = JOptionPane.showInputDialog("Digite el nombre del jugador 1");
        String nombre2 = JOptionPane.showInputDialog("Digite el nombre del jugador 2");
-       setName(persona, nombre,nombre2);
+       setName(nombre,nombre2);
     }
-    
-    public void setName(Persona persona[],String Nombre,String Nombre2){
-       persona[0].setNombre(Nombre);
-       persona[1].setNombre(Nombre2);
+    //Agregar nombres
+    public void setName(String Nombre,String Nombre2){
+       this.persona[0].setNombre(Nombre);
+       this.persona[1].setNombre(Nombre2);
     }
-    
-    public void alertName(Persona persona[]){
-        JOptionPane.showMessageDialog(null,"Nombre 1: "+persona[0].getNombre());
-        JOptionPane.showMessageDialog(null,"Nombre 2: "+persona[1].getNombre());
+    //Obtener nombre del jugador1
+    public String getNameJug1(){
+        return this.persona[0].getNombre();
+    }
+    //obtener nombre del jugador2
+    public String getNameJug2(){
+        return this.persona[1].getNombre();
     }
 }
