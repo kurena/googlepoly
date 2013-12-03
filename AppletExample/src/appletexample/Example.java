@@ -7,6 +7,7 @@
 package appletexample;
 import Main.Persona;
 import Main.Main;
+import Main.Propiedades;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import java.awt.*;
@@ -16,8 +17,10 @@ import javax.swing.*;
 import org.xml.sax.Attributes;
 
 public class Example extends javax.swing.JApplet implements ActionListener {
-
-    /**
+        Propiedades arregloPropiedadades[] = new Propiedades[16];
+        Persona persona[] = new Persona[2];  
+        Main createGame=new Main();
+        /**
      * Initializes the applet Example
      */
     @Override
@@ -50,12 +53,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
                     initComponents();
-                    Main createGame=new Main();
-                    createGame.createGame();
-                    jLabel9.setText(createGame.getNameJug(0));
-                    jLabel8.setText(createGame.getNameJug(1));
-                    jLabel10.setText("Dinero Actual:"+createGame.obtenerDineroJug(0));
-                    jLabel13.setText("Dinero Actual:"+createGame.obtenerDineroJug(1));
                 }
             });
         } catch (Exception ex) {
@@ -66,6 +63,15 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         
     }
     
+    
+    public void startGame(){
+                    createGame.createGame();
+                    nombre.setText(createGame.getNameJug(0));
+                    nombre2.setText(createGame.getNameJug(1));
+                    dinero.setText("Dinero Actual:"+createGame.obtenerDineroJug(0));
+                    dinero2.setText("Dinero Actual:"+createGame.obtenerDineroJug(1));
+       // ficha.setLocation(arregloPropiedadades[0].getPosX(),arregloPropiedadades[0].getPosY());
+    }
    
 
     /**
@@ -121,12 +127,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        nombre = new javax.swing.JLabel();
+        dinero = new javax.swing.JLabel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        nombre2 = new javax.swing.JLabel();
+        dinero2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -415,15 +423,67 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
         jLabel5.setText("Dados:");
 
-        jTabbedPane2.addTab("Estadisticas", jLabel13);
+        jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        jLabel8.setText("Nombre");
-        jLabel8.setMinimumSize(new java.awt.Dimension(40, 14));
-        jTabbedPane2.addTab("Jugador 2", jLabel8);
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel9.setText("Nombre");
-        jTabbedPane3.addTab("Jugador1", jLabel9);
-        jTabbedPane3.addTab("Estadisticas", jLabel10);
+        nombre.setText("Nombre:");
+
+        dinero.setText("Dinero:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombre)
+                    .addComponent(dinero))
+                .addContainerGap(140, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nombre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dinero)
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("tab2", jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        nombre2.setText("Nombre:");
+
+        dinero2.setText("Dinero:");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombre2)
+                    .addComponent(dinero2))
+                .addContainerGap(140, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nombre2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dinero2)
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("tab3", jPanel4);
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
@@ -448,9 +508,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addGap(46, 46, 46)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
@@ -463,7 +523,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addGap(30, 30, 30)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSeparator2)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane2)
                     .addComponent(jTabbedPane3))
                 .addGap(22, 22, 22)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -480,6 +540,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTabbedPane3.getAccessibleContext().setAccessibleName("Jugador 1");
         jTabbedPane2.getAccessibleContext().setAccessibleName("Jugador 2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -494,7 +555,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(279, 279, 279)))
+                        .addGap(441, 441, 441)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -531,6 +592,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JLabel carta;
     private javax.swing.JLabel carta2;
     private javax.swing.JLabel developer;
+    private javax.swing.JLabel dinero;
+    private javax.swing.JLabel dinero2;
     private javax.swing.JLabel drupal;
     private javax.swing.JLabel eBay;
     private javax.swing.JLabel fundacion;
@@ -543,20 +606,18 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JFrame jFrame1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -565,6 +626,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JLabel leerCarta;
     private javax.swing.JLabel leerCarta2;
     private javax.swing.JLabel mozilla;
+    private javax.swing.JLabel nombre;
+    private javax.swing.JLabel nombre2;
     private javax.swing.JLabel opera;
     private javax.swing.JLabel parqueo;
     private javax.swing.JLabel paypal;
@@ -585,8 +648,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
         if(b != null)
             buttonText = b.getText();
-        
         if (buttonText.equals("Jugar")){
+            startGame();
+        }
+        if (buttonText.equals("Lanzar")){
             //Animacion Gif
             final Timer timer = new Timer(1,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
