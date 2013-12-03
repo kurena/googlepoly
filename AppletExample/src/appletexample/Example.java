@@ -49,13 +49,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 public void run() {
                     initComponents();
                     createGame.createGame();
+                    log("Dale en el boton de Jugar para empezar la accion");
                     
                 }
             });
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        jButton4.addActionListener(this);
+        jugar.addActionListener(this);
         jButton5.addActionListener(this);
         
     }
@@ -82,6 +83,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     
     
     public void clickLanzar(int valor){
+        log(createGame.getPersonaNombre(this.control)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
        int move = valor;
        int finalMove;
         if(this.control == 0){
@@ -103,12 +105,16 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     
     public void updateChip(int index, int pos){
         if(index == 1){
-            player1.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY());
+            System.out.println("valx1:"+createGame.getPropiedades(pos).getPosX());
+            System.out.println("valY1:"+createGame.getPropiedades(pos).getPosY());
+            player1.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY()+10);
         } else {
-            player2.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY());
+            System.out.println("valx2:"+createGame.getPropiedades(pos).getPosX());
+            System.out.println("valY2:"+createGame.getPropiedades(pos).getPosY());
+            player2.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY()+10);
         }
     }
-    public int moverDado(){
+    public void moverDado(){
          //Animacion Gif
             final Timer timer = new Timer(1,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
@@ -138,7 +144,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             timer2.setInitialDelay(3000);
             timer2.start();
             timer2.setRepeats(false);
-            return movimiento;
     }
  
     public void log(String text){
@@ -185,11 +190,13 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        player1 = new javax.swing.JLabel();
+        player2 = new javax.swing.JLabel();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jugar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
@@ -204,8 +211,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         dinero2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         log = new javax.swing.JTextArea();
-        player1 = new javax.swing.JLabel();
-        player2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -302,6 +307,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/drupal.gif"))); // NOI18N
 
+        player1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/player1.png"))); // NOI18N
+
+        player2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/player2.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -333,13 +342,18 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(288, 288, 288)
                                 .addComponent(blogspot))
-                            .addComponent(parqueo)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(138, 138, 138)
                                 .addComponent(android))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(213, 213, 213)
-                                .addComponent(jLabel2)))
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(player1)
+                                    .addComponent(parqueo))
+                                .addGap(52, 52, 52)
+                                .addComponent(player2)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(63, 63, 63)
@@ -391,86 +405,92 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(IE)
-                    .addComponent(fundacion)
-                    .addComponent(leerCarta)
-                    .addComponent(mozilla))
-                .addComponent(jLabel3)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(opera)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(wordpress))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(carta2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(72, 72, 72)
-                .addComponent(drupal)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(blogspot)
-                    .addComponent(parqueo)
-                    .addComponent(android)
-                    .addComponent(jLabel2)))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(impuestosArriba)
-                            .addComponent(skype)
+                            .addComponent(IE)
+                            .addComponent(fundacion)
+                            .addComponent(leerCarta)
+                            .addComponent(mozilla))
+                        .addComponent(jLabel3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(opera)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(289, 289, 289)
-                                .addComponent(amazon))
-                            .addComponent(leerCarta2)
-                            .addComponent(jail)
+                                .addGap(76, 76, 76)
+                                .addComponent(wordpress))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(214, 214, 214)
-                                .addComponent(developer))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(137, 137, 137)
-                                .addComponent(eBay)))
-                        .addGap(74, 74, 74)
+                                .addGap(150, 150, 150)
+                                .addComponent(carta2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(72, 72, 72)
+                        .addComponent(drupal)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(blogspot)
+                            .addComponent(parqueo)
+                            .addComponent(android)
+                            .addComponent(jLabel2)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(145, 145, 145)
-                                .addComponent(impuestos))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(impuestosArriba)
+                                    .addComponent(skype)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(289, 289, 289)
+                                        .addComponent(amazon))
+                                    .addComponent(leerCarta2)
+                                    .addComponent(jail)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(214, 214, 214)
+                                        .addComponent(developer))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(137, 137, 137)
+                                        .addComponent(eBay)))
+                                .addGap(74, 74, 74)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(145, 145, 145)
+                                        .addComponent(impuestos))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(145, 145, 145)
+                                        .addComponent(ask))
+                                    .addComponent(jLabel4)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(145, 145, 145)
+                                        .addComponent(wikipedia))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(75, 75, 75)
+                                        .addComponent(jLabel6))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(145, 145, 145)
+                                        .addComponent(start))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(145, 145, 145)
+                                        .addComponent(LeerCarta))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(145, 145, 145)
-                                .addComponent(ask))
-                            .addComponent(jLabel4)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(145, 145, 145)
-                                .addComponent(wikipedia))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(jLabel6))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(145, 145, 145)
-                                .addComponent(start))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(145, 145, 145)
-                                .addComponent(LeerCarta))))
+                                .addGap(364, 364, 364)
+                                .addComponent(carta))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(364, 364, 364)
-                        .addComponent(carta))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(440, 440, 440)
-                .addComponent(jLabel7))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(paypal))
+                        .addGap(440, 440, 440)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(paypal)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(player1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(player2, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         jInternalFrame1.setVisible(true);
 
         jButton5.setText("Lanzar");
 
-        jButton4.setText("Jugar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jugar.setText("Jugar");
+        jugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jugarActionPerformed(evt);
             }
         });
 
@@ -480,7 +500,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(jugar)
                 .addGap(32, 32, 32)
                 .addComponent(jButton5)
                 .addGap(104, 104, 104))
@@ -493,7 +513,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton5))
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -619,55 +639,40 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane3.getAccessibleContext().setAccessibleName("Jugador 1");
         jTabbedPane2.getAccessibleContext().setAccessibleName("Jugador 2");
 
-        player1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/player1.png"))); // NOI18N
-
-        player2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/player2.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(player1)
-                        .addGap(121, 121, 121)
-                        .addComponent(player2)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
                 .addContainerGap(545, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jInternalFrame1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(player1)
-                    .addComponent(player2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugarActionPerformed
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jugarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -687,7 +692,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JLabel fundacion;
     private javax.swing.JLabel impuestos;
     private javax.swing.JLabel impuestosArriba;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -712,6 +716,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JLabel jail;
+    private javax.swing.JButton jugar;
     private javax.swing.JLabel leerCarta;
     private javax.swing.JLabel leerCarta2;
     private javax.swing.JTextArea log;
@@ -741,7 +746,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         if(b != null)
             buttonText = b.getText();
         if (buttonText.equals("Jugar")){
+            log("El Juego ha iniciado");
             startGame();
+            jugar.setEnabled(false);
         }
         if (buttonText.equals("Lanzar")){
            moverDado();          

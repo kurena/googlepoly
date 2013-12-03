@@ -101,4 +101,8 @@ public class Main {
     public boolean getGanador(){
         return this.ganador;
     }
+    
+    public String getPersonaNombre(int pos){
+        return this.persona[pos].getNombre();
+    }
 }
