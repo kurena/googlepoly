@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package appletexample;
 import Main.Persona;
@@ -17,12 +13,11 @@ import javax.swing.*;
 import org.xml.sax.Attributes;
 
 public class Example extends javax.swing.JApplet implements ActionListener {
-        Propiedades arregloPropiedadades[] = new Propiedades[16];
         Persona persona[] = new Persona[2];  
         Main createGame=new Main();
-        /**
-     * Initializes the applet Example
-     */
+        private int control= 0;
+        private int movimiento;
+       
     @Override
     public void init() {
         /* Set the Nimbus look and feel */
@@ -53,6 +48,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
                     initComponents();
+                    createGame.createGame();
+                    
                 }
             });
         } catch (Exception ex) {
@@ -63,22 +60,92 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         
     }
     
+    public void loadData(){
+        createGame.createAndAskNames();
+        nombre.setText(createGame.getNameJug(0));
+        nombre2.setText(createGame.getNameJug(1));
+        dinero.setText("Dinero Actual:"+createGame.obtenerDineroJug(0));
+        dinero2.setText("Dinero Actual:"+createGame.obtenerDineroJug(1));
+    }
     
     public void startGame(){
-                    createGame.createGame();
-                    nombre.setText(createGame.getNameJug(0));
-                    nombre2.setText(createGame.getNameJug(1));
-                    dinero.setText("Dinero Actual:"+createGame.obtenerDineroJug(0));
-                    dinero2.setText("Dinero Actual:"+createGame.obtenerDineroJug(1));
-       // ficha.setLocation(arregloPropiedadades[0].getPosX(),arregloPropiedadades[0].getPosY());
+        loadData();        
+    }
+    
+    public int validarDado(int posicion){
+        int returning = posicion;
+        if(posicion > 30){
+            returning = posicion - 30;
+        }
+        return returning;
+    }
+    
+    
+    public void clickLanzar(int valor){
+       int move = valor;
+       int finalMove;
+        if(this.control == 0){
+            finalMove = createGame.getPersonaPosicion(0) + move;
+            System.out.println("val1:"+validarDado(finalMove));
+            createGame.setPersonaPosicion(0,validarDado(finalMove));
+            updateChip(1,createGame.getPersonaPosicion(0));
+            this.control=1;
+            
+        } else {
+            finalMove = createGame.getPersonaPosicion(1) + move;
+            System.out.println("val2:"+validarDado(finalMove));
+            createGame.setPersonaPosicion(1,validarDado(finalMove));
+            updateChip(0,createGame.getPersonaPosicion(1));
+            this.control=0;
+            
+        }
+    }//cerrar clicklnzar
+    
+    public void updateChip(int index, int pos){
+        if(index == 1){
+            player1.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY());
+        } else {
+            player2.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY());
+        }
+    }
+    public int moverDado(){
+         //Animacion Gif
+            final Timer timer = new Timer(1,new ActionListener(){
+                public void actionPerformed(ActionEvent evt){
+                    imagene image = new imagene();
+                    jLabel11.setIcon(image.gifDado(0));
+                    jLabel12.setIcon(image.gifDado(0));
+                }
+            });
+            //Dados Estaticos Aleatoriamente
+            final Timer timer2 = new Timer(1000,new ActionListener(){
+                public void actionPerformed(ActionEvent evt){
+                    timer.stop();
+                    imagene image = new imagene();
+                    dados tirar = new dados();
+                    int numDado = tirar.calculaNumero();
+                    int numDado2 = tirar.calculaNumero();
+                    jLabel11.setIcon(image.gifDado(numDado));
+                    jLabel12.setIcon(image.gifDado(numDado2));
+                    int Resultado = numDado+numDado2;
+                    movimiento = numDado+numDado2;
+                    jLabel5.setText("Espacios a mover: "+Resultado);
+                    clickLanzar(Resultado);
+                }
+            });
+            //Start y delay entre animaciones
+            timer.start();
+            timer2.setInitialDelay(3000);
+            timer2.start();
+            timer2.setRepeats(false);
+            return movimiento;
+    }
+ 
+    public void log(String text){
+        log.setText(log.getText()+"\n\n"+text);
     }
    
 
-    /**
-     * This method is called from within the init() method to initialize the
-     * form. WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -135,6 +202,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jPanel4 = new javax.swing.JPanel();
         nombre2 = new javax.swing.JLabel();
         dinero2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        log = new javax.swing.JTextArea();
+        player1 = new javax.swing.JLabel();
+        player2 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -168,6 +239,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/start.gif"))); // NOI18N
 
@@ -234,83 +307,86 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(135, 135, 135)
-                                .addComponent(IE))
-                            .addComponent(fundacion))
-                        .addGap(69, 69, 69)
-                        .addComponent(leerCarta))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
-                        .addComponent(mozilla))
-                    .addComponent(jLabel3)
-                    .addComponent(opera)
-                    .addComponent(wordpress)
-                    .addComponent(carta2)
-                    .addComponent(drupal)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(288, 288, 288)
-                        .addComponent(blogspot))
-                    .addComponent(parqueo)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(android))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jLabel2)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(impuestosArriba)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(135, 135, 135)
+                                        .addComponent(IE))
+                                    .addComponent(fundacion))
+                                .addGap(69, 69, 69)
+                                .addComponent(leerCarta))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(207, 207, 207)
+                                .addComponent(mozilla))
+                            .addComponent(jLabel3)
+                            .addComponent(opera)
+                            .addComponent(wordpress)
+                            .addComponent(carta2)
+                            .addComponent(drupal)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(288, 288, 288)
+                                .addComponent(blogspot))
+                            .addComponent(parqueo)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(138, 138, 138)
+                                .addComponent(android))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(213, 213, 213)
+                                .addComponent(jLabel2)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(skype)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addComponent(amazon))
+                                .addGap(63, 63, 63)
+                                .addComponent(impuestosArriba)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(skype)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(150, 150, 150)
+                                        .addComponent(amazon))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(74, 74, 74)
+                                        .addComponent(leerCarta2))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(150, 150, 150)
+                                        .addComponent(jail))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(150, 150, 150)
+                                        .addComponent(developer))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(150, 150, 150)
+                                        .addComponent(eBay))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(leerCarta2))
+                                .addComponent(impuestos, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ask)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(219, 219, 219)
+                                        .addComponent(jLabel4))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(148, 148, 148)
+                                        .addComponent(wikipedia))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(219, 219, 219)
+                                        .addComponent(jLabel6))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(219, 219, 219)
+                                        .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(73, 73, 73)
+                                        .addComponent(LeerCarta))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addComponent(jail))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addComponent(developer))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addComponent(eBay))))
+                                .addGap(289, 289, 289)
+                                .addComponent(carta))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(impuestos, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ask)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(219, 219, 219)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(148, 148, 148)
-                                .addComponent(wikipedia))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(219, 219, 219)
-                                .addComponent(jLabel6))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(219, 219, 219)
-                                .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(73, 73, 73)
-                                .addComponent(LeerCarta))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(289, 289, 289)
-                        .addComponent(carta))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jLabel7))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(445, 445, 445)
-                .addComponent(paypal))
+                        .addGap(445, 445, 445)
+                        .addComponent(paypal)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,6 +561,11 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
         jTabbedPane2.addTab("tab3", jPanel4);
 
+        log.setColumns(20);
+        log.setRows(5);
+        log.setEnabled(false);
+        jScrollPane1.setViewportView(log);
+
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
@@ -502,20 +583,20 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(136, 136, 136))
+                .addGap(130, 130, 130))
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jSeparator1)
+                        .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                            .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -535,35 +616,49 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(60, 60, 60)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         jTabbedPane3.getAccessibleContext().setAccessibleName("Jugador 1");
         jTabbedPane2.getAccessibleContext().setAccessibleName("Jugador 2");
+
+        player1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/player1.png"))); // NOI18N
+
+        player2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/player2.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(441, 441, 441)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(player1)
+                        .addGap(121, 121, 121)
+                        .addComponent(player2)))
+                .addContainerGap(545, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jInternalFrame1))
+                    .addComponent(jInternalFrame1)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(player1)
+                    .addComponent(player2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
@@ -571,14 +666,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        /*        dados tirar = new dados();
-        int numDado = tirar.calculaNumero();
-        int numDado2 = tirar.calculaNumero();
-        int Resultado = numDado+numDado2;
-        imagene imagen = new imagene();
-        jLabel5.setIcon(imagen.gifDado(numDado));
-        jLabel5.setText("Espacios a mover: "+Resultado);*/
-        // JOptionPane.showMessageDialog(rootPane,"alerta");
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
@@ -618,6 +706,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -625,12 +714,15 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JLabel jail;
     private javax.swing.JLabel leerCarta;
     private javax.swing.JLabel leerCarta2;
+    private javax.swing.JTextArea log;
     private javax.swing.JLabel mozilla;
     private javax.swing.JLabel nombre;
     private javax.swing.JLabel nombre2;
     private javax.swing.JLabel opera;
     private javax.swing.JLabel parqueo;
     private javax.swing.JLabel paypal;
+    private javax.swing.JLabel player1;
+    private javax.swing.JLabel player2;
     private javax.swing.JLabel skype;
     private javax.swing.JLabel start;
     private javax.swing.JLabel wikipedia;
@@ -652,36 +744,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             startGame();
         }
         if (buttonText.equals("Lanzar")){
-            //Animacion Gif
-            final Timer timer = new Timer(1,new ActionListener(){
-                public void actionPerformed(ActionEvent evt){
-                    imagene image = new imagene();
-                    jLabel11.setIcon(image.gifDado(0));
-                    jLabel12.setIcon(image.gifDado(0));
-                }
-            });
-            //Dados Estaticos Aleatoriamente
-            final Timer timer2 = new Timer(1000,new ActionListener(){
-                public void actionPerformed(ActionEvent evt){
-                    timer.stop();
-                    imagene image = new imagene();
-                    dados tirar = new dados();
-                    int numDado = tirar.calculaNumero();
-                    int numDado2 = tirar.calculaNumero();
-                    jLabel11.setIcon(image.gifDado(numDado));
-                    jLabel12.setIcon(image.gifDado(numDado2));
-                    int Resultado = numDado+numDado2;
-                    jLabel5.setText("Espacios a mover: "+Resultado);
-                }
-            });
-            //Start y delay entre animaciones
-            timer.start();
-            timer2.setInitialDelay(3000);
-            timer2.start();
-            timer2.setRepeats(false);
-            
-            
+           moverDado();          
         }
     }
-    
 }
