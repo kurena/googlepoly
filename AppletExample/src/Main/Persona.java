@@ -24,7 +24,6 @@ public class Persona {
     }
     
     public void setNombreP(String Nombre){
-        System.out.println("click");
         this.Nombre = Nombre;
     }
     

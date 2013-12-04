@@ -22,19 +22,19 @@ public class Main {
     }
     
     public void createGame(){
-        arregloPropiedadades[0] = new Propiedades(0, "", 700,625,0,0,30,10,"Salida", "PROPIEDAD");
+        arregloPropiedadades[0] = new Propiedades(60, "", 700,625,0,0,30,10,"Salida", "PROPIEDAD");
         arregloPropiedadades[1] = new Propiedades(60, "", 605,625,0,0,30,10,"Wikipedia", "PROPIEDAD");
-        arregloPropiedadades[2] = new Propiedades(0, "", 530,625,0,0,30,10,"Google.org", "LEERCARTA");
+        arregloPropiedadades[2] = new Propiedades(60, "", 530,625,0,0,30,10,"Google.org", "LEERCARTA");
         arregloPropiedadades[3] = new Propiedades(70, "", 455,625,0,0,35,10,"ASK", "PROPIEDAD");
-        arregloPropiedadades[4] = new Propiedades(0, "", 383,625,0,0,35,10,"IMPUESTOS15", "INPUESTOS15");
-        arregloPropiedadades[5] = new Propiedades(0, "", 310,625,0,0,35,10,"Blogspot", "PROPIEDAD");
-        arregloPropiedadades[6] = new Propiedades(0, "", 235,625,0,0,30,10,"JotSpot", "PROPIEDAD");
+        arregloPropiedadades[4] = new Propiedades(60, "", 383,625,0,0,35,10,"IMPUESTOS15", "INPUESTOS15");
+        arregloPropiedadades[5] = new Propiedades(60, "", 310,625,0,0,35,10,"Blogspot", "PROPIEDAD");
+        arregloPropiedadades[6] = new Propiedades(60, "", 235,625,0,0,30,10,"JotSpot", "PROPIEDAD");
         arregloPropiedadades[7] = new Propiedades(60, "", 160,625,0,0,30,10,"Wikipedia", "PROPIEDAD");
-        arregloPropiedadades[8] = new Propiedades(0, "", 50,625,0,0,30,10,"Google.org", "LEERCARTA");
-        arregloPropiedadades[9] = new Propiedades(70, "", 50,510,0,0,35,10,"ASK", "PROPIEDAD");
-        arregloPropiedadades[10] = new Propiedades(0, "", 50,440,0,0,35,10,"IMPUESTOS15", "INPUESTOS15");
-        arregloPropiedadades[11] = new Propiedades(0, "", 50,377,0,0,35,10,"IMPUESTOS15", "INPUESTOS15");
-        arregloPropiedadades[12] = new Propiedades(0, "", 50,304,0,0,35,10,"Blogspot", "PROPIEDAD");
+        arregloPropiedadades[8] = new Propiedades(60, "", 50,625,0,0,30,10,"Google.org", "LEERCARTA");
+        arregloPropiedadades[9] = new Propiedades(70, "", 50,514,0,0,35,10,"ASK", "PROPIEDAD");
+        arregloPropiedadades[10] = new Propiedades(60, "", 50,440,0,0,35,10,"IMPUESTOS15", "INPUESTOS15");
+        arregloPropiedadades[11] = new Propiedades(60, "", 50,377,0,0,35,10,"IMPUESTOS15", "INPUESTOS15");
+        arregloPropiedadades[12] = new Propiedades(60, "", 50,304,0,0,35,10,"Blogspot", "PROPIEDAD");
         arregloPropiedadades[13] = new Propiedades(0, "", 50,230,0,0,30,10,"Salida", "PROPIEDAD");
         arregloPropiedadades[14] = new Propiedades(60, "", 50,155,0,0,30,10,"Wikipedia", "PROPIEDAD");
         arregloPropiedadades[15] = new Propiedades(0, "", 50,35,0,0,30,10,"Google.org", "LEERCARTA");
@@ -84,6 +84,10 @@ public class Main {
     
     public Propiedades getPropiedades(int pos){
         return this.arregloPropiedadades[pos];
+    }
+    
+    public Jugador getJugador(int pos){
+        return this.jugador[pos];
     }
     
     public int getPersonaPosicion(int pos){

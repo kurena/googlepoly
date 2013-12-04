@@ -20,11 +20,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
        
     @Override
     public void init() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -60,7 +55,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         lanzar.addActionListener(this);
         
     }
-    //cargar la informacion al hacer click en jugar
+    //------------------------------------------cargar la informacion al hacer click en jugar----------------//
     public void loadData(){
         createGame.createAndAskNames();
         nombre.setText("Nombre: "+createGame.getNameJug(0));
@@ -72,7 +67,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     public void startGame(){
         loadData();        
     }
-    //validamos si se pasa de 30 que es la posicion final, volvemos al inicio
+    //---------------validamos si se pasa de 30 que es la posicion final, volvemos al inicio-----------------//
     public int validarDado(int posicion){
         int returning = posicion;
         if(posicion > 30){
@@ -81,7 +76,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         return returning;
     }
     
-    //cuando hace click en lanzar
+    //---------------------------------cuando hace click en lanzar-------------------------//
     public void clickLanzar(int valor){
         log(createGame.getPersonaNombre(this.control)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
        int move = valor;
@@ -102,7 +97,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         lanzar.setEnabled(true);
     }//cerrar clicklnzar
     
-    //actualizar ficha!
+    //-----------------------------------actualizar ficha!-------------------------------//
     public void updateChip(int index, int pos){
         if(index == 1){
             player1.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY()+10);
@@ -117,17 +112,49 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     public void validarPropiedad(){
         String[] opcionesIniciales = {"Comprar", "Avanzar"};
         int posicionActual = this.createGame.getPersonaPosicion(this.getCurrentPosition());
+        System.out.println(this.createGame.getPropiedades(posicionActual).getDueño());
+        if(this.createGame.getPropiedades(posicionActual).getDueño()==""){
+                    String picked = (String)JOptionPane.showInputDialog(this, "Seleccione que accion desea:", "Requerido", JOptionPane.QUESTION_MESSAGE, null, opcionesIniciales, opcionesIniciales[1]);
+                    accion(picked);
+        }
         System.out.println(posicionActual);
         //Input dialog with a combo box 
-        String picked = (String)JOptionPane.showInputDialog(this, "Seleccione que accion desea:", "Requerido", JOptionPane.QUESTION_MESSAGE
-                        , null, opcionesIniciales, opcionesIniciales[0]);
     }
+    
+     //----------------------Funcion validar casilla---------------------------//
+    public void accion(String Accions){
+        if(Accions.equals("Comprar")){
+            this.createGame.getPropiedades(this.getCurrentProperty()).setDueño(this.createGame.getJugador(this.control).getNombreP());
+            this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());
+            log(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño() +" ha comprado a la propiedad: "+this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
+            this.updateMoney();
+        } 
+    }
+    
+    
         
-    //-----------------------------------------------------------------------//
+    //-----------------------Retornar quien juega------------------------------------------------//
     
     public int getCurrentPosition(){
         return this.control;
     }
+    
+    
+    public void updateMoney(){
+        System.out.println("UpdateMoney:"+createGame.obtenerDineroJug(this.getCurrentPosition()));
+        if(this.getCurrentPosition()==0){
+             dinero.setText("Dinero Actual:"+createGame.obtenerDineroJug(0));
+        } else {
+             dinero2.setText("Dinero Actual:"+createGame.obtenerDineroJug(1));
+        }
+    }
+    
+    //-------------------------Obtener la posicion de la ficha de la persona-------------//
+    public int getCurrentProperty(){
+        return this.createGame.getPersonaPosicion(this.getCurrentPosition());
+    }
+    
+    //---------------------------------Funcion cuando se hace click al dado---------//
     public void moverDado(){
         lanzar.setEnabled(false);
          //Animacion Gif
@@ -161,10 +188,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             timer2.start();
             timer2.setRepeats(false);
     }
- 
+ //---------------------------Logear las acciones a jugar----------------------------------//
     public void log(String text){
         java.util.Date ras= new java.util.Date();
-        
         log.setText(log.getText()+"["+ras.getMonth()+"/"+ras.getDay()+"/"+ras.getYear()+" "+ras.getHours()+":"+ras.getMinutes()+":"+ras.getSeconds()+"] "+text+"\n");
     }
    
@@ -308,7 +334,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addContainerGap())
         );
 
-        jLabel5.setText("Dados:");
+        jLabel5.setText("Dados: 0");
 
         jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
@@ -340,7 +366,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addContainerGap(87, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("tab2", jPanel3);
+        jTabbedPane3.addTab("Jugador 1", jPanel3);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -370,7 +396,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addContainerGap(87, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("tab3", jPanel4);
+        jTabbedPane2.addTab("Jugador 2", jPanel4);
 
         log.setColumns(20);
         log.setRows(5);
@@ -407,11 +433,11 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(130, 130, 130))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                        .addGap(124, 124, 124))))
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,7 +461,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jTabbedPane3.getAccessibleContext().setAccessibleName("Jugador 1");
@@ -455,7 +481,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGap(48, 48, 48))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -517,13 +543,15 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
         if(b != null)
             buttonText = b.getText();
+        
         if (buttonText.equals("Jugar")){
             log("El Juego ha iniciado");
             startGame();
             jugar.setEnabled(false);
         }
+        
         if (buttonText.equals("Lanzar")){
            moverDado();          
         }
-    }
+    }//Fin del listener
 }

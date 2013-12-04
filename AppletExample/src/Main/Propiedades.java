@@ -83,7 +83,7 @@ public class Propiedades extends Persona{
        this.setNombreP(nombre);
     }
     
-    public String getNombreP(){
+    public String getNombre(){
        return this.nombreP;
     }
     
