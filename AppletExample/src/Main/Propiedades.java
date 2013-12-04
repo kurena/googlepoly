@@ -10,7 +10,7 @@ package Main;
  *
  * @author ACER
  */
-public class Propiedades {
+public class Propiedades extends Persona{
     private int costo;
     private int posX;
     private int posY;
@@ -19,14 +19,15 @@ public class Propiedades {
     private int hipotecaPrecio;
     private int renta;
     private String dueño;
-    private String nombre;
+    private String nombreP;
     private String tipo;
     
     public Propiedades(){
-        
+        super();
     }
     
     public Propiedades(int costo, String dueño, int posX, int posY, int cantHoteles, int cantCasas, int hipotecaPrecio, int renta,String nombre, String tipo){
+        super(dueño);
         this.costo = costo;
         this.posX = posX;
         this.posY = posY;
@@ -34,8 +35,7 @@ public class Propiedades {
         this.cantCasas = cantCasas;
         this.hipotecaPrecio = hipotecaPrecio;
         this.renta = renta;
-        this.dueño =dueño;
-        this.nombre = nombre;
+        this.nombreP = nombre;
         this.tipo = tipo;
     }
     
@@ -76,15 +76,15 @@ public class Propiedades {
     }
     
     public String getDueño(){
-       return this.dueño;
+       return this.getNombreP();
     }
     
     public void setDueño( String nombre){
-       this.dueño = nombre;
+       this.setNombreP(nombre);
     }
     
-    public String getNombre(){
-       return this.nombre;
+    public String getNombreP(){
+       return this.nombreP;
     }
     
     
