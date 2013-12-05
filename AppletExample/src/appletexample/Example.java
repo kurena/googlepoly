@@ -20,6 +20,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
        
     @Override
     public void init() {
+        setSize(1400,1500);
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -114,8 +116,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         int posicionActual = this.createGame.getPersonaPosicion(this.getCurrentPosition());
         System.out.println(this.createGame.getPropiedades(posicionActual).getDueño());
         if(this.createGame.getPropiedades(posicionActual).getDueño()==""){
-                    String picked = (String)JOptionPane.showInputDialog(this, "Seleccione que accion desea:", "Requerido", JOptionPane.QUESTION_MESSAGE, null, opcionesIniciales, opcionesIniciales[1]);
-                    accion(picked);
+                    //String picked = (String)JOptionPane.showInputDialog(this, "Seleccione que accion desea:", "Requerido", JOptionPane.QUESTION_MESSAGE, null, opcionesIniciales, opcionesIniciales[1]);
+                    //accion(picked);
+                    Avanzar.setEnabled(true);
+                    Comprar.setEnabled(true);
         }
         System.out.println(posicionActual);
         //Input dialog with a combo box 
@@ -207,6 +211,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         player2 = new javax.swing.JLabel();
         player1 = new javax.swing.JLabel();
         table = new javax.swing.JLabel();
+        Avanzar = new javax.swing.JButton();
+        Comprar = new javax.swing.JButton();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -262,33 +268,59 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        player2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugador2.png"))); // NOI18N
+        player2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fichachrome2.png"))); // NOI18N
 
-        player1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugador1.png"))); // NOI18N
+        player1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fichachrome1.png"))); // NOI18N
         player1.setToolTipText("");
 
         table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
+
+        Avanzar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/avanzar.png"))); // NOI18N
+        Avanzar.setBorderPainted(false);
+        Avanzar.setContentAreaFilled(false);
+        Avanzar.setEnabled(false);
+
+        Comprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/comprar.png"))); // NOI18N
+        Comprar.setBorderPainted(false);
+        Comprar.setContentAreaFilled(false);
+        Comprar.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(203, 203, 203)
-                .addComponent(player1)
-                .addGap(99, 99, 99)
-                .addComponent(player2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(203, 203, 203)
+                        .addComponent(player1)
+                        .addGap(99, 99, 99)
+                        .addComponent(player2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Avanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Comprar)
+                .addGap(174, 174, 174))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(Comprar)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Avanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(player1)
@@ -461,7 +493,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         jTabbedPane3.getAccessibleContext().setAccessibleName("Jugador 1");
@@ -491,7 +523,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );
@@ -503,6 +535,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Avanzar;
+    private javax.swing.JButton Comprar;
     private javax.swing.JLabel dinero;
     private javax.swing.JLabel dinero2;
     private javax.swing.JDialog jDialog1;
