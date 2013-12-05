@@ -6,13 +6,15 @@
 
 package Main;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author raiam.quesada.urena
  */
 public class Jugador extends Persona {
     private int posicion;
-    private int CantPropiedades;
+    private ArrayList<String> CantPropiedades = new ArrayList();
     private int dinero;
 
     public Jugador() {
@@ -22,10 +24,9 @@ public class Jugador extends Persona {
     
 
 
-    public Jugador(String Nombre, int posicion, int CantPropiedades, int dinero) {
+    public Jugador(String Nombre, int posicion, int dinero) {
         super(Nombre);
         this.posicion = posicion;
-        this.CantPropiedades = CantPropiedades;
         this.dinero = dinero;
     }
     
@@ -47,12 +48,13 @@ public class Jugador extends Persona {
         this.posicion = posicion;
     }
 
-    public int getCantPropiedades() {
+    public ArrayList getCantPropiedades() {
         return CantPropiedades;
     }
 
-    public void setCantPropiedades(int CantPropiedades) {
-        this.CantPropiedades = CantPropiedades;
+    public void setCantPropiedades(String propiedad) {
+        System.out.println("SetCantPropiedades");
+        this.CantPropiedades.add(propiedad);
     }
 
     public int getDinero() {

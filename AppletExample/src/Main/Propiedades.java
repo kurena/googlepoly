@@ -21,12 +21,15 @@ public class Propiedades extends Persona{
     private String dueño;
     private String nombreP;
     private String tipo;
+    private int PrecioCasa;
+    private int precioHotel;
+    private int precioCondiminio;
     
     public Propiedades(){
         super();
     }
     
-    public Propiedades(int costo, String dueño, int posX, int posY, int cantHoteles, int cantCasas, int hipotecaPrecio, int renta,String nombre, String tipo){
+    public Propiedades(int costo, String dueño, int posX, int posY, int cantHoteles, int cantCasas, int hipotecaPrecio, int renta,String nombre, String tipo, int PrecioCasa, int precioHotel){
         super(dueño);
         this.costo = costo;
         this.posX = posX;
@@ -37,6 +40,8 @@ public class Propiedades extends Persona{
         this.renta = renta;
         this.nombreP = nombre;
         this.tipo = tipo;
+        this.precioHotel = precioHotel;
+        this.PrecioCasa = PrecioCasa;
     }
     
     public int getPosX(){
@@ -85,6 +90,14 @@ public class Propiedades extends Persona{
     
     public String getNombre(){
        return this.nombreP;
+    }
+    
+    public int getRentaCasas(){
+        return (this.PrecioCasa * this.cantCasas);
+    }
+    
+    public int getRentaHoteles(){
+        return (this.precioHotel * this.cantHoteles);
     }
     
     
