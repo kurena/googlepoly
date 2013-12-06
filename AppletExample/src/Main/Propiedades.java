@@ -100,5 +100,9 @@ public class Propiedades extends Persona{
         return (this.precioHotel * this.cantHoteles);
     }
     
+    public String getType(){
+        return this.tipo;
+    }
+    
     
 }

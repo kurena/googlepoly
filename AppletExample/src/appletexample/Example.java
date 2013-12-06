@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.*;
 import org.xml.sax.Attributes;
 
@@ -58,6 +59,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         Comprar.addActionListener(this);
         Avanzar.addActionListener(this);
         More.addActionListener(this);
+        prop.addActionListener(this);
+        prop2.addActionListener(this);
     }
     //------------------------------------------cargar la informacion al hacer click en jugar----------------//
     public void loadData(){
@@ -86,25 +89,52 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //---------------------------------cuando hace click en lanzar-------------------------//
     public void clickLanzar(int valor){
        int move = valor;
-       valor = 4;
+//       valor = 2;
        int finalMove;
         if(this.control == 0){
             finalMove = createGame.getPersonaPosicion(0) + move;
-            createGame.setPersonaPosicion(0,validarDado(valor));
+            createGame.setPersonaPosicion(0,validarDado(finalMove));
             this.control=1;
+            log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             updateChip(1,createGame.getPersonaPosicion(0));
             
         } else {
             finalMove = createGame.getPersonaPosicion(1) + move;
-            createGame.setPersonaPosicion(1,validarDado(valor));
+            createGame.setPersonaPosicion(1,validarDado(finalMove));
             this.control=0;
+            log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             updateChip(0,createGame.getPersonaPosicion(1));
         }
         
-        log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
-        
     }//cerrar clicklnzar
     
+    private void showPropiedades(){
+        
+        String texto="";
+        if(this.createGame.getJugador(0).getCantPropiedades().size() >0){
+            for(int x=0; x<this.createGame.getJugador(0).getCantPropiedades().size();x++){
+                texto=texto+"\n"+this.createGame.getJugador(0).getCantPropiedades().get(x);
+            }
+        } else {
+            texto="\nNo posee propiedades";
+        }
+
+        JOptionPane.showMessageDialog(rootPane,"Propiedades de Jugador 1:"+texto);
+    }
+    
+    private void showPropiedades2(){
+        
+        String texto="";
+        if(this.createGame.getJugador(1).getCantPropiedades().size() >0){
+            for(int x=0; x<this.createGame.getJugador(1).getCantPropiedades().size();x++){
+                texto=texto+"\n"+this.createGame.getJugador(1).getCantPropiedades().get(x);
+            }
+        } else {
+            texto="No posee propiedades";
+        }
+
+        JOptionPane.showMessageDialog(rootPane,"Propiedades de Jugador 2:"+texto);
+    }
     //--------------------------------------Devuelve el valor del actual jugador------------//
     public int returnControl(){
         int valor;
@@ -115,31 +145,110 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         }
         return valor;
     }
+    
+    public void ableAll(){
+        prop.setEnabled(true);
+        prop2.setEnabled(true);
+        lanzar.setEnabled(true);
+    }
     //-----------------------------------actualizar ficha!-------------------------------//
     public void updateChip(int index, int pos){
         if(index == 1){
-            player1.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY()+10);
+            player1.setLocation(this.createGame.getPropiedades(0).getPosX(),this.createGame.getPropiedades(0).getPosY());
         } else {
-            player2.setLocation(createGame.getPropiedades(pos).getPosX(),createGame.getPropiedades(pos).getPosY()+10);
+            player2.setLocation(this.createGame.getPropiedades(1).getPosX(),this.createGame.getPropiedades(1).getPosX());
         }
         validarPropiedad();
     }//fin de la funcion
     
     //----------------------Funcion validar casilla---------------------------//
+    public void reduceMoney(String texto){
+        if(texto.equals("IMPUESTO15")){
+             this.setDinero(15);
+             log("A "+this.createGame.getNameJug(this.getCurrentPosition())+" se le ha descontado $15 producto de impuestos");
+             this.updateMoney();
+        } else if(texto.equals("BONUS")){
+             this.setMasDinero(20);
+             log(this.createGame.getNameJug(this.getCurrentPosition())+" ha obtenido $20 por visitar la plataforma android");
+             this.updateMoney();
+        } else if(texto.equals("DONACION")){
+            this.setMasDinero(50);
+             log(this.createGame.getNameJug(this.getCurrentPosition())+" ha obtenido %50 por participar en la donacion de google");
+             this.updateMoney();
+        } else if(texto.equals("BONUSDEV")){
+            this.setMasDinero(75);
+             log(this.createGame.getNameJug(this.getCurrentPosition())+" ha obtenido $75 por ser developer");
+             this.updateMoney();
+        } else if(texto.equals("CARCEL")){
+             this.setDinero(50);
+             log("A LA CARCEL!! Se te ha descontado $50 para salir de la carcel. Lo sentimos "+this.createGame.getNameJug(this.getCurrentPosition())+"!!!");
+             this.updateMoney();
+        } else if(texto.equals("LEERCARTA")){
+            String tipo, pregunta, respuestas;
+            int valor;
+                Random generator = new Random(); 
+                int i = generator.nextInt(10) + 1;
+                i = 0;
+                tipo = this.createGame.getPregunta(i).getTipo();
+                valor = this.createGame.getPregunta(i).getValor();
+                pregunta= this.createGame.getPregunta(i).getPreguntaexto();
+                respuestas = this.createGame.getPregunta(i).getContestar();
+                this.question(pregunta, tipo, valor,respuestas);
+                
+        }
+        Avanzar.setEnabled(true);
+    }
     
+    //---------------------------------------validar la pregunta-------------------------------------//
+    public void question(String texto, String tipo, int valor, String respuestas){
+        if(tipo.equals("Ganar")){
+            if(respuestas != ""){
+                String respuesta = JOptionPane.showInputDialog(rootPane, texto, "Podes ganar o perder, Contesta.", JOptionPane.QUESTION_MESSAGE);
+                if(respuesta.equals(respuestas)){
+                  this.setMasDinero(valor);
+                    log("Se le ha otorgado a "+this.createGame.getNameJug(this.getCurrentPosition())+" una bonificacion de $"+valor);
+                    this.updateMoney();
+                } else {
+                    this.setDinero(valor);
+                    log("Se le ha rebajado a "+this.createGame.getNameJug(this.getCurrentPosition())+" una cantidad de $"+valor+" por no contestar correctamente");
+                    this.updateMoney();
+                }
+            } else {
+                this.setMasDinero(valor);
+                log("Se le ha otorgado a "+this.createGame.getNameJug(this.getCurrentPosition())+" una bonificacion de $"+valor);
+                this.updateMoney();
+                JOptionPane.showMessageDialog(rootPane, ""+texto, "Ganaste Dinero", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        } else if(tipo.equals("Perder")){
+            this.setDinero(valor);
+            log("Se le ha rebajado a "+this.createGame.getNameJug(this.getCurrentPosition())+" una cantidad de $"+valor);
+            this.updateMoney();
+            JOptionPane.showMessageDialog(rootPane, ""+texto, "Perdiste Dinero", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    
+    //-------------------------------------------- validar datos de propiedad------------------------//
     public void validarPropiedad(){
         String dueño = this.createGame.getPropiedades(this.getCurrentProperty()).getDueño();
+        String tipo = this.createGame.getPropiedades(this.getCurrentProperty()).getType();
         String[] opcionesIniciales = {"Comprar", "Avanzar"};
+        //else if(tipo!= "PROPIEDAD"){
+              //  log();
+            //}
         int posicionActual = this.createGame.getPersonaPosicion(this.getCurrentPosition());
         System.out.println(this.createGame.getPropiedades(posicionActual).getDueño());
-        if(this.createGame.getPropiedades(posicionActual).getDueño()==""){
+        if(this.createGame.getPropiedades(posicionActual).getDueño()=="" && tipo =="PROPIEDAD"){
                     log(this.createGame.getNameJug(this.returnControl())+", seleccione una opcion de las habilitadas.");
                     Avanzar.setEnabled(true);
                     Comprar.setEnabled(true);
+        } else if(tipo!="PROPIEDAD"){
+            this.reduceMoney(tipo);
         }
         
         if(dueño!="" && dueño != getCurrentPlayerName()){
-           setDinero();
+                setDinero();
                 log(this.createGame.getNameJug(this.getCurrentPosition())+" debe de pagar: "+this.createGame.getPropiedades(this.getCurrentProperty()).getRenta()+" por el alquiler de la propiedad");
                 this.updateMoney();
                 Avanzar.setEnabled(true);
@@ -155,17 +264,19 @@ public class Example extends javax.swing.JApplet implements ActionListener {
      //----------------------Funcion validar casilla---------------------------//
     public void accion(String Accions){
         String dueño = this.createGame.getPropiedades(this.getCurrentProperty()).getDueño();
+        String tipo = this.createGame.getPropiedades(this.getCurrentProperty()).getType();
+        System.out.println(tipo);
         if(Accions.equals("Comprar")){
-            if(dueño ==""){
+            if(dueño =="" && tipo=="PROPIEDAD"){
                 this.createGame.getPropiedades(this.getCurrentProperty()).setDueño(this.createGame.getJugador(this.returnControl()).getNombreP());
                 this.setDinero();
                 log(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño() +" ha comprado a la propiedad: "+this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
                 this.updateMoney();
-                this.createGame.getJugador(this.getCurrentPosition()).setCantPropiedades("datos");
+                this.createGame.getJugador(this.getCurrentPosition()).setCantPropiedades(this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
                 this.updatePropiedades();
-            } else {
+            } else if(dueño !=""){
                 log("Esta propiedad ya ha sido comprada por: "+this.createGame.getPropiedades(this.getCurrentProperty()).getDueño());
-            }
+            } 
             
         } 
         
@@ -173,6 +284,12 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //--------------setear el dinero del jugador---------------------------------------//
     public void setDinero(){
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
+    }
+    public void setDinero(int valor){
+        this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-valor);
+    }
+    public void setMasDinero(int valor){
+        this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()+valor);
     }
     
     public void addPropiedad(String nombre){
@@ -305,10 +422,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jPanel2 = new javax.swing.JPanel();
         player2 = new javax.swing.JLabel();
         player1 = new javax.swing.JLabel();
-        table = new javax.swing.JLabel();
         Avanzar = new javax.swing.JButton();
         Comprar = new javax.swing.JButton();
         More = new javax.swing.JButton();
+        table = new javax.swing.JLabel();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -316,21 +433,23 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         jugar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         nombre = new javax.swing.JLabel();
         dinero = new javax.swing.JLabel();
         propiedades = new javax.swing.JLabel();
+        prop = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         nombre2 = new javax.swing.JLabel();
         dinero2 = new javax.swing.JLabel();
         propiedades2 = new javax.swing.JLabel();
+        prop2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         log = new javax.swing.JTextArea();
         logText = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -366,13 +485,12 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         player2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fichachrome2.png"))); // NOI18N
 
         player1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fichachrome1.png"))); // NOI18N
         player1.setToolTipText("");
-
-        table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
 
         Avanzar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/avanzar_1.png"))); // NOI18N
         Avanzar.setToolTipText("Terminar turno");
@@ -399,6 +517,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         More.setContentAreaFilled(false);
         More.setEnabled(false);
 
+        table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -406,48 +526,51 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(Avanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Comprar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(More, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(116, 116, 116)
+                        .addGap(94, 94, 94)
                         .addComponent(player1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(player2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(player2))
+                    .addComponent(table))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(table)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Comprar, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                    .addComponent(Avanzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(More, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 19, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(player1)
-                            .addComponent(player2))
-                        .addGap(214, 214, 214))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Comprar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Avanzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(More, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(player1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(player2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
         );
 
         jInternalFrame1.setBackground(java.awt.Color.white);
+        jInternalFrame1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jInternalFrame1.setVisible(true);
 
-        lanzar.setText("Lanzar");
+        lanzar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lanzar.png"))); // NOI18N
         lanzar.setToolTipText("Lanzar");
+        lanzar.setContentAreaFilled(false);
+        lanzar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lanzar.setEnabled(false);
 
-        jugar.setText("Jugar");
+        jugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugar.png"))); // NOI18N
         jugar.setToolTipText("Jugar");
+        jugar.setContentAreaFilled(false);
+        jugar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jugarActionPerformed(evt);
@@ -460,20 +583,18 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jugar)
-                .addGap(32, 32, 32)
-                .addComponent(lanzar)
-                .addGap(104, 104, 104))
+                .addComponent(jugar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(lanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(188, 188, 188))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lanzar))
-                    .addComponent(jugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lanzar))
                 .addContainerGap())
         );
 
@@ -493,6 +614,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         propiedades.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         propiedades.setText("# de propiedades:");
 
+        prop.setText("Ver Propiedades");
+        prop.setToolTipText("Propiedades Jugador 1");
+        prop.setEnabled(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -504,6 +629,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     .addComponent(dinero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(propiedades, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(prop)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,7 +643,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addComponent(dinero)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(propiedades)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(prop))
         );
 
         jTabbedPane3.addTab("Jugador 1", jPanel3);
@@ -531,6 +661,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         propiedades2.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         propiedades2.setText("# de propiedades:");
 
+        prop2.setText("Ver Propiedades");
+        prop2.setToolTipText("Propiedades Jugador 2");
+        prop2.setEnabled(false);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -542,6 +676,10 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     .addComponent(dinero2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(propiedades2, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(prop2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -552,7 +690,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addComponent(dinero2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(propiedades2)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(prop2))
         );
 
         jTabbedPane2.addTab("Jugador 2", jPanel4);
@@ -575,60 +714,57 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
                                 .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addGap(104, 104, 104)
+                                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(134, 134, 134))))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(logText)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTabbedPane3)
-                    .addComponent(jTabbedPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(34, 34, 34)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(logText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addGap(33, 33, 33)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(logText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane3.getAccessibleContext().setAccessibleName("Jugador 1");
@@ -639,26 +775,25 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(466, 466, 466)
+                        .addGap(1314, 1314, 1314)
                         .addComponent(jLabel1))
-                    .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jInternalFrame1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -702,6 +837,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     private javax.swing.JLabel nombre2;
     private javax.swing.JLabel player1;
     private javax.swing.JLabel player2;
+    private javax.swing.JButton prop;
+    private javax.swing.JButton prop2;
     private javax.swing.JLabel propiedades;
     private javax.swing.JLabel propiedades2;
     private javax.swing.JLabel table;
@@ -722,13 +859,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             buttonID = b.getToolTipText();
         }    
         
-        if (buttonText.equals("Jugar")){
+        if (buttonID.equals("Jugar")){
             log("El Juego ha iniciado");
             startGame();
             jugar.setEnabled(false);
+            ableAll();
         }
         
-        if (buttonText.equals("Lanzar")){
+        if (buttonID.equals("Lanzar")){
            moverDado();          
         }
         
@@ -744,6 +882,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         
         if(buttonID.equals("Mas opciones")){
             showMoreOptions();
+        }
+        
+        if(buttonID.equals("Propiedades Jugador 1")){
+            showPropiedades();
+        }
+        
+        if(buttonID.equals("Propiedades Jugador 2")){
+            showPropiedades2();
         }
         
         
