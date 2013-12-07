@@ -80,7 +80,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //---------------validamos si se pasa de 30 que es la posicion final, volvemos al inicio-----------------//
     public int validarDado(int posicion){
         int returning = posicion;
-        if(posicion >= 29){
+        if(posicion > 30){
             returning = posicion - 30;
         }
         return returning;
@@ -155,12 +155,36 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     public void updateChip(int index, int pos){
         if(index == 1){
             player1.setLocation(this.createGame.getPropiedades(0).getPosX(),this.createGame.getPropiedades(0).getPosY());
+            //player1.setLocation(0,0);       }
         } else {
-            player2.setLocation(this.createGame.getPropiedades(1).getPosX(),this.createGame.getPropiedades(1).getPosX());
+           player2.setLocation(this.createGame.getPropiedades(1).getPosX(),this.createGame.getPropiedades(1).getPosX());
+           // player2.setLocation(20,20);
         }
         validarPropiedad();
     }//fin de la funcion
-    
+    public void  putChips(){
+            int ang =20;
+            int mag =165;
+            int mag2=160;
+            int xi=player1.getX();
+            int yi=player1.getY();
+            int x2= player2.getX();
+            int y2= player2.getY();
+                       
+            for (int m = 1; m <= mag2; m++) {
+                int y = (int) (m * Math.sin(Math.toRadians(ang)));
+                int x = (int) (m * Math.cos(Math.toRadians(ang)));
+                player2.setLocation(x2+x, y2-y);
+                player2.paintImmediately(-1,-1,getWidth(),getHeight());
+            }
+            
+            for (int m = 1; m <= mag; m++) {
+                int y = (int) (m * Math.sin(Math.toRadians(ang)));
+                int x = (int) (m * Math.cos(Math.toRadians(ang)));
+                player1.setLocation(xi+x, yi-y);
+                player1.paintImmediately(-1,-1,getWidth(),getHeight());
+            }
+    }
     //----------------------Funcion validar casilla---------------------------//
     public void reduceMoney(String texto){
         if(texto.equals("IMPUESTO15")){
@@ -187,8 +211,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             String tipo, pregunta, respuestas;
             int valor;
                 Random generator = new Random(); 
-                int i = generator.nextInt(10) + 1;
-                i = 0;
+                int i = generator.nextInt(10);
                 tipo = this.createGame.getPregunta(i).getTipo();
                 valor = this.createGame.getPregunta(i).getValor();
                 pregunta= this.createGame.getPregunta(i).getPreguntaexto();
@@ -866,6 +889,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             startGame();
             jugar.setEnabled(false);
             ableAll();
+            putChips();
         }
         
         if (buttonID.equals("Lanzar")){
