@@ -164,15 +164,13 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //-----------------------------------actualizar ficha!-------------------------------//
     public void updateChip(int index, int pos){
         if(index == 1){
-            System.out.println("1EjeX: "+this.createGame.getPropiedades(pos).getPosX());
-            System.out.println("1EjeY: "+this.createGame.getPropiedades(pos).getPosY());
-            player1.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(0).getPosY());
-            //player1.setLocation(0,0);       }
+            System.out.println("1EjeX: "+this.createGame.getPropiedades(this.getCurrentProperty()).getPosX());
+            System.out.println("1EjeY: "+this.createGame.getPropiedades(this.getCurrentProperty()).getPosY());
+            player1.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(pos).getPosY());
         } else {
-           player2.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(1).getPosY());
+           player2.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(pos).getPosY());
             System.out.println("2EjeX: "+this.createGame.getPropiedades(pos).getPosX());
             System.out.println("2EjeY: "+this.createGame.getPropiedades(pos).getPosY());           
-// player2.setLocation(20,20);
         }
         validarPropiedad();
     }//fin de la funcion
