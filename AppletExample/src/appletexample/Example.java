@@ -104,16 +104,16 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         if(this.control == 0){
             finalMove = createGame.getPersonaPosicion(0) + move;
             createGame.setPersonaPosicion(0,validarDado(finalMove));
-            this.control=1;
             log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             updateChip(1,createGame.getPersonaPosicion(0));
+            this.control=1;
             
         } else {
             finalMove = createGame.getPersonaPosicion(1) + move;
             createGame.setPersonaPosicion(1,validarDado(finalMove));
-            this.control=0;
             log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             updateChip(0,createGame.getPersonaPosicion(1));
+            this.control=0;
         }
         
     }//cerrar clicklnzar
@@ -164,11 +164,15 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //-----------------------------------actualizar ficha!-------------------------------//
     public void updateChip(int index, int pos){
         if(index == 1){
-            player1.setLocation(this.createGame.getPropiedades(0).getPosX(),this.createGame.getPropiedades(0).getPosY());
+            System.out.println("1EjeX: "+this.createGame.getPropiedades(pos).getPosX());
+            System.out.println("1EjeY: "+this.createGame.getPropiedades(pos).getPosY());
+            player1.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(0).getPosY());
             //player1.setLocation(0,0);       }
         } else {
-           player2.setLocation(this.createGame.getPropiedades(1).getPosX(),this.createGame.getPropiedades(1).getPosX());
-           // player2.setLocation(20,20);
+           player2.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(1).getPosY());
+            System.out.println("2EjeX: "+this.createGame.getPropiedades(pos).getPosX());
+            System.out.println("2EjeY: "+this.createGame.getPropiedades(pos).getPosY());           
+// player2.setLocation(20,20);
         }
         validarPropiedad();
     }//fin de la funcion
