@@ -302,7 +302,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         if(Accions.equals("Comprar")){
             if(dueño =="" && tipo=="PROPIEDAD"){
                 this.createGame.getPropiedades(this.getCurrentProperty()).setDueño(this.createGame.getJugador(this.returnControl()).getNombreP());
-                this.setDinero();
+                this.setDineroPropiedad();
                 log(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño() +" ha comprado a la propiedad: "+this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
                 this.updateMoney();
                 this.createGame.getJugador(this.getCurrentPosition()).setCantPropiedades(this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
@@ -317,6 +317,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //--------------setear el dinero del jugador---------------------------------------//
     public void setDinero(){
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
+    }
+    public void setDineroPropiedad(){
+        this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());
     }
     public void setDinero(int valor){
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-valor);
