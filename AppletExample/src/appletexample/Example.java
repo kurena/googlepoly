@@ -47,6 +47,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 public void run() {
                     initComponents();
                     createGame.createGame();
+                    setImagenes();
                     log("Dale en el boton de Jugar para empezar la accion");
                     
                 }
@@ -61,6 +62,15 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         More.addActionListener(this);
         prop.addActionListener(this);
         prop2.addActionListener(this);
+    }
+    
+    //-----------------------imagen para bloqueadas-------------------------------//
+    public void setImagenes(){
+        Comprar.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addBlock.png")));
+        jugar.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugarBlocked.png")));
+        lanzar.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lanzarBlocked.png")));
+        More.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/images/moreBlocked.png")));
+        Avanzar.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/images/avanzar_1Blocked.png")));
     }
     //------------------------------------------cargar la informacion al hacer click en jugar----------------//
     public void loadData(){
@@ -613,8 +623,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jugar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lanzar))
                 .addContainerGap())
         );
