@@ -454,6 +454,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 }
             });
             //Dados Estaticos Aleatoriamente
+            
             final Timer timer2 = new Timer(1000,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
                     lanzar.setEnabled(false);
@@ -529,6 +530,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         Avanzar.setEnabled(true);
     }
 
+    public void setControl(int controlData){
+        this.control = controlData;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
