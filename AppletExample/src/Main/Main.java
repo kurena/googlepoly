@@ -27,7 +27,7 @@ public class Main {
         arregloPropiedadades[1] = new Propiedades(60, "", 465,500,0,0,0,0,10,20,"Wikipedia", "PROPIEDAD",100,200,300,300);
         arregloPropiedadades[2] = new Propiedades(0, "", 405,500,0,0,0,0,0,0,"Google.org", "LEERCARTA",0,0,0,0);
         arregloPropiedadades[3] = new Propiedades(70, "", 350,500,0,0,0,0,25,35,"Ask.com", "PROPIEDAD",100,200,300,300);
-        arregloPropiedadades[4] = new Propiedades(15, "", 295,500,0,0,0,0,0,0,"Impuestos Servidor", "IMPUESTO15",0,0,0,0);
+        arregloPropiedadades[4] = new Propiedades(15, "", 295,500,0,0,0,0,0,0,"Impuestos Servidor", "IMPUESTOS15",0,0,0,0);
         arregloPropiedadades[5] = new Propiedades(20, "", 240,500,0,0,0,0,0,0,"Plaforma Movil", "BONUS",0,0,0,0);
         arregloPropiedadades[6] = new Propiedades(120, "", 180,500,0,0,0,0,50,70,"Blogspot", "PROPIEDAD",100,200,300,300);
         arregloPropiedadades[7] = new Propiedades(130, "", 120,500,0,0,0,0,65,80,"JotSpot", "Propiedad",100,200,300,300);
@@ -54,16 +54,16 @@ public class Main {
         arregloPropiedadades[28] = new Propiedades(480, "", 540,355,0,0,0,0,350,100,"Oracle", "PROPIEDAD",100,200,300,300);
         arregloPropiedadades[29] = new Propiedades(500, "", 540,415,0,0,0,0,400,460,"Microsoft", "PROPIEDAD",100,200,300,300);
         
-        preguntas[0] = new Preguntas("Digite el nombre sistema Operativo de celulares de google",10,"Ganar","Android");
+        preguntas[0] = new Preguntas("Digite el nombre sistema Operativo de celulares de google.",10,"Ganar","Android");
         preguntas[1] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[2] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[3] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[4] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[5] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[6] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[7] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[8] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
-        preguntas[9] = new Preguntas("Has ganado $10 por comisiones.",10,"Ganar","");
+        preguntas[2] = new Preguntas("Google necesita $75 por servidores nuevos.",75,"Perder","");
+        preguntas[3] = new Preguntas("El canal de google para ver videos.",60,"Ganar","youtube");
+        preguntas[4] = new Preguntas("Has visitado google, resiviras $35 por contribuirnos.",35,"Ganar","");
+        preguntas[5] = new Preguntas("Has ganado $40 por comisiones.",40,"Ganar","");
+        preguntas[6] = new Preguntas("Has perdido $30 por comisiones.",30,"Perder","");
+        preguntas[7] = new Preguntas("Necesitaras una ayuda. -$50 por no usar.",10,"Perder","");
+        preguntas[8] = new Preguntas("Has ganado $20 por comisiones.",20,"Ganar","");
+        preguntas[9] = new Preguntas("Has incrementado tus acciones, recibiras $80.",80,"Ganar","");
     }
     
     public void createAndAskNames(){

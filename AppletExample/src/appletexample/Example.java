@@ -22,6 +22,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         private int resul1 =0;
         private int resul2 =0;
         private int movimiento;
+        private boolean flag;
        
     @Override
     public void init() {
@@ -83,7 +84,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         nombre2.setText("Nombre: "+createGame.getNameJug(1));
         dinero.setText("Dinero Actual:"+createGame.obtenerDineroJug(0));
         dinero2.setText("Dinero Actual:"+createGame.obtenerDineroJug(1));
-        System.out.println(this.createGame.getJugador(0).getCantPropiedades());
         propiedades.setText("# de propiedades: 0");
         propiedades2.setText("# de propiedades: 0");
     }
@@ -103,32 +103,41 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //---------------------------------cuando hace click en lanzar-------------------------//
     public void clickLanzar(int valor){
        int move = valor;
-//       valor = 2;
+       valor = 6;
        int finalMove;
         if(this.control == 0){
             finalMove = createGame.getPersonaPosicion(0) + move;
             createGame.setPersonaPosicion(0,validarDado(finalMove));
-            log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
-            updateChip(1,createGame.getPersonaPosicion(0));
+            log(createGame.getPersonaNombre(0)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             if(this.pares == 1){
+                System.out.println("Entro a los pares1");
                 this.control = 0;
                 this.pares = 0;
+                flag=true;
             }
-            else
-                this.control=1;
+            else{
+             this.control=1;   
+             System.out.println("NO Entro a los pares1");
+             flag=false;
+            }
+            updateChip(1,createGame.getPersonaPosicion(0));
             
         } else {
             finalMove = createGame.getPersonaPosicion(1) + move;
             createGame.setPersonaPosicion(1,validarDado(finalMove));
-            log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
-            updateChip(0,createGame.getPersonaPosicion(1));
-            
+            log(createGame.getPersonaNombre(1)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);            
             if(this.pares == 1){
                 this.control = 1;
                 this.pares = 0;
+                flag=true;
+                System.out.println("Entro a los pares2");
             }
-            else
-                this.control=0;
+            else{
+             this.control=0;   
+             System.out.println("no Entro a los pares2");
+             flag=false;
+            }
+            updateChip(0,createGame.getPersonaPosicion(1));
         }
         
     }//cerrar clicklnzar
@@ -162,12 +171,15 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     }
     //--------------------------------------Devuelve el valor del actual jugador------------//
     public int returnControl(){
-        int valor;
-        if(this.control== 0){
-            valor= 1;
+        int valor=this.control;
+        if(this.flag){
         } else {
-            valor= 0;
-        }
+            if(this.control== 0){
+                valor= 1;
+            } else {
+                valor= 0;
+            }
+          } 
         return valor;
     }
     
@@ -179,13 +191,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //-----------------------------------actualizar ficha!-------------------------------//
     public void updateChip(int index, int pos){
         if(index == 1){
-            System.out.println("1EjeX: "+this.createGame.getPropiedades(this.getCurrentProperty()).getPosX());
-            System.out.println("1EjeY: "+this.createGame.getPropiedades(this.getCurrentProperty()).getPosY());
             player1.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(pos).getPosY());
         } else {
            player2.setLocation(this.createGame.getPropiedades(pos).getPosX(),this.createGame.getPropiedades(pos).getPosY());
-            System.out.println("2EjeX: "+this.createGame.getPropiedades(pos).getPosX());
-            System.out.println("2EjeY: "+this.createGame.getPropiedades(pos).getPosY());           
         }
         validarPropiedad();
     }//fin de la funcion
@@ -214,7 +222,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     }
     //----------------------Funcion validar casilla---------------------------//
     public void reduceMoney(String texto){
-        if(texto.equals("IMPUESTO15")){
+        if(texto.equals("IMPUESTOS15")){
              this.setDinero(15);
              log("A "+this.createGame.getNameJug(this.getCurrentPosition())+" se le ha descontado $15 producto de impuestos");
              this.updateMoney();
@@ -285,13 +293,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         String dueño = this.createGame.getPropiedades(this.getCurrentProperty()).getDueño();
         String tipo = this.createGame.getPropiedades(this.getCurrentProperty()).getType();
         String[] opcionesIniciales = {"Comprar", "Avanzar"};
+        System.out.println("DUENO: "+dueño+" tipo: "+tipo);
         //else if(tipo!= "PROPIEDAD"){
               //  log();
             //}
         int posicionActual = this.createGame.getPersonaPosicion(this.getCurrentPosition());
-        System.out.println(this.createGame.getPropiedades(posicionActual).getDueño());
-        if(this.createGame.getPropiedades(posicionActual).getDueño()=="" && tipo =="PROPIEDAD"){
-                    log(this.createGame.getNameJug(this.returnControl())+", seleccione una opcion de las habilitadas.");
+        System.out.println("Dueno: "+this.createGame.getPropiedades(posicionActual).getDueño());
+        if(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño()=="" && tipo =="PROPIEDAD"){
+                    log(this.createGame.getNameJug(this.getCurrentPosition())+", seleccione una opcion de las habilitadas.");
                     Avanzar.setEnabled(true);
                     Comprar.setEnabled(true);
         } else if(tipo!="PROPIEDAD"){
@@ -400,6 +409,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             log("Un Residencial ha sido comprado, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()+" residencial(es)");
             this.setDineroExtra(this.createGame.getPropiedades(this.getCurrentProperty()).getPrecioResidencial());
         }
+        this.updateMoney();
     }
     
     
@@ -439,6 +449,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     
     //-------------------------Obtener la posicion de la ficha de la persona-------------//
     public int getCurrentProperty(){
+        System.out.println("Buscar en; "+this.returnControl());
+        System.out.println("Buscar en; "+this.control);
         return this.createGame.getPersonaPosicion(this.returnControl());
     }
     
@@ -481,14 +493,17 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                         log(createGame.getNameJug(1)+" obtuvo "+Resultado);
                         resul2=Resultado;
                         iniciar=0;
+     
                         if(resul1>resul2){
                             control=0;
+                            setControl(0);
                             log(createGame.getNameJug(0)+" inicia el juego!");
-                        }
+                        }else
                         if(resul1<resul2){
                             log(createGame.getNameJug(1)+" inicia el juego!");
                             control=1;
-                        }
+                            setControl(1);
+                        }else
                         if(resul1==resul2){
                             log("Empates a lanzar los dados de nuevo!");
                             iniciar=1;
@@ -499,6 +514,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                         
                         if(numDado == numDado2){
                         pares = 1;
+                        setPares(1);
                         }
                         jLabel5.setText("Espacios a mover: "+Resultado);
                         clickLanzar(Resultado);
@@ -532,6 +548,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
 
     public void setControl(int controlData){
         this.control = controlData;
+    }
+    public void setPares(int controlData){
+        this.pares = controlData;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
