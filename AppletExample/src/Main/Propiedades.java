@@ -121,16 +121,18 @@ public class Propiedades extends Persona{
     public int getRenta(){
         if(this.getCantCasas()>0){
             this.renta= this.getRentaCasas();
+            if(this.getCantResidenciales()>0){
+                this.renta = this.getRentaResidenciales();
+                if(this.getCantCondominios()>0){
+                    this.renta=this.getRentaCondominios();            
+                    if(this.getCantHoteles()>0){
+                        this.renta=this.getRentaHoteles();
+                    }
+                } 
+            }
+            
         } 
-        if(this.getCantResidenciales()>0){
-            this.renta = this.getRentaResidenciales();
-        }
-        if(this.getCantCondominios()>0){
-            this.renta=this.getRentaCondominios();            
-        } 
-        if(this.getCantHoteles()>0){
-            this.renta=this.getRentaHoteles();
-        }
+        System.out.println("Renta: "+this.renta);
        return this.renta;
     }
     
@@ -147,6 +149,7 @@ public class Propiedades extends Persona{
     }
     
     public int getRentaCasas(){
+        System.out.println("Renta de casa: "+((this.PrecioCasa/2) * this.cantCasas));
         return ((this.PrecioCasa/2) * this.cantCasas);
     }
     

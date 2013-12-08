@@ -23,6 +23,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         private int resul2 =0;
         private int movimiento;
         private boolean flag;
+        private boolean flagLose=false;
        
     @Override
     public void init() {
@@ -94,8 +95,11 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //---------------validamos si se pasa de 30 que es la posicion final, volvemos al inicio-----------------//
     public int validarDado(int posicion){
         int returning = posicion;
-        if(posicion > 30){
+        if(posicion >= 30){
             returning = posicion - 30;
+            this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()+100);
+            log("Has recibido $100 por dar la vuelta");
+            this.updateMoney();
         }
         return returning;
     }
@@ -103,11 +107,11 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //---------------------------------cuando hace click en lanzar-------------------------//
     public void clickLanzar(int valor){
        int move = valor;
-        valor = 7;
+       //valor = 3;
        int finalMove;
         if(this.control == 0){
             finalMove = createGame.getPersonaPosicion(0) + move;
-            createGame.setPersonaPosicion(0,validarDado(valor));
+            createGame.setPersonaPosicion(0,validarDado(finalMove));
             log(createGame.getPersonaNombre(0)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             if(this.pares == 1){
                 this.control = 0;
@@ -122,7 +126,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             
         } else {
             finalMove = createGame.getPersonaPosicion(1) + move;
-            createGame.setPersonaPosicion(1,validarDado(valor));
+            createGame.setPersonaPosicion(1,validarDado(finalMove));
             log(createGame.getPersonaNombre(1)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);            
             if(this.pares == 1){
                 this.control = 1;
@@ -218,7 +222,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     }
     //----------------------Funcion validar casilla---------------------------//
     public void reduceMoney(String texto){
-        if(texto.equals("IMPUESTOS15")){
+        if(this.flagLose !=true){
+         if(texto.equals("IMPUESTOS15")){
              this.setDinero(15);
              log("A "+this.createGame.getNameJug(this.getCurrentPosition())+" se le ha descontado $15 producto de impuestos");
              this.updateMoney();
@@ -228,7 +233,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
              this.updateMoney();
         } else if(texto.equals("DONACION")){
             this.setMasDinero(50);
-             log(this.createGame.getNameJug(this.getCurrentPosition())+" ha obtenido %50 por participar en la donacion de google");
+             log(this.createGame.getNameJug(this.getCurrentPosition())+" ha obtenido $50 por participar en la donacion de google");
              this.updateMoney();
         } else if(texto.equals("BONUSDEV")){
             this.setMasDinero(75);
@@ -250,7 +255,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 this.question(pregunta, tipo, valor,respuestas);
                 
         }
-        Avanzar.setEnabled(true);
+         Avanzar.setEnabled(true);
+        }
+        
     }
     
     //---------------------------------------validar la pregunta-------------------------------------//
@@ -304,7 +311,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         
         if(dueño!="" && dueño != getCurrentPlayerName()){
                 setDinero();
-                log(this.createGame.getNameJug(this.getCurrentPosition())+" debe de pagar: "+this.createGame.getPropiedades(this.getCurrentProperty()).getRenta()+" por el alquiler de la propiedad");
+                log(this.createGame.getNameJug(this.getCurrentPosition())+" debe de pagar: $"+this.createGame.getPropiedades(this.getCurrentProperty()).getRenta()+" por el alquiler de la propiedad");
                 setDineroNew();
                 this.updateNewMoney();
                 this.updateMoney();
@@ -324,12 +331,16 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         String tipo = this.createGame.getPropiedades(this.getCurrentProperty()).getType();
         if(Accions.equals("Comprar")){
             if(dueño =="" && tipo=="PROPIEDAD"){
-                this.createGame.getPropiedades(this.getCurrentProperty()).setDueño(this.createGame.getJugador(this.returnControl()).getNombreP());
-                this.setDineroPropiedad();
-                log(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño() +" ha comprado a la propiedad: "+this.createGame.getPropiedades(this.getCurrentProperty()).getNombre()+" en: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());
-                this.updateMoney();
-                this.createGame.getJugador(this.getCurrentPosition()).setCantPropiedades(this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
-                this.updatePropiedades();
+                if(this.createGame.getJugador(this.getCurrentPosition()).getDinero()>=this.createGame.getPropiedades(this.getCurrentProperty()).getCosto()){
+                    this.createGame.getPropiedades(this.getCurrentProperty()).setDueño(this.createGame.getJugador(this.returnControl()).getNombreP());
+                    this.setDineroPropiedad();
+                    log(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño() +" ha comprado a la propiedad: "+this.createGame.getPropiedades(this.getCurrentProperty()).getNombre()+" en: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());
+                    this.updateMoney();
+                    this.createGame.getJugador(this.getCurrentPosition()).setCantPropiedades(this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
+                    this.updatePropiedades();   
+                }else {
+                    log("No hay los fondos suficientes para comprar la propiedad");
+                }
             } else if(dueño !=""){
                 log("Esta propiedad ya ha sido comprada por: "+this.createGame.getPropiedades(this.getCurrentProperty()).getDueño());
             } 
@@ -342,11 +353,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
     }
     public void setDineroPropiedad(){
-        if(this.createGame.getJugador(this.getCurrentPosition()).getDinero()>=this.createGame.getPropiedades(this.getCurrentProperty()).getCosto()){
             this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());        
-        }else {
-            log("No hay los fondos suficientes para comprar la propiedad");
-        }
     }
     public void setDinero(int valor){
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-valor);
@@ -446,6 +453,23 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         } else {
              dinero2.setText("Dinero Actual:"+this.createGame.getJugador(1).getDinero());
         }
+        if(this.createGame.getJugador(this.getCurrentPosition()).getDinero()<0){
+            JOptionPane.showMessageDialog(rootPane, this.createGame.getJugador(this.control).getNombre()+" ha ganado la partida, su rival se quedo sin fondos", "Tenemos un ganador", JOptionPane.INFORMATION_MESSAGE);
+            this.flagLose=true;
+            resetAll();
+        }
+    }
+    
+    public void resetAll(){
+        control= 0;
+        pares = 0;
+        iniciar = 0;
+        resul1 =0;
+        resul2 =0;
+        flag=false;
+        flagLose=false;
+        this.blockButton();
+        jugar.setEnabled(true);
     }
     
     public void updateNewMoney(){
