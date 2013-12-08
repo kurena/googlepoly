@@ -103,11 +103,11 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //---------------------------------cuando hace click en lanzar-------------------------//
     public void clickLanzar(int valor){
        int move = valor;
-      // valor = 7;
+        valor = 7;
        int finalMove;
         if(this.control == 0){
             finalMove = createGame.getPersonaPosicion(0) + move;
-            createGame.setPersonaPosicion(0,validarDado(finalMove));
+            createGame.setPersonaPosicion(0,validarDado(valor));
             log(createGame.getPersonaNombre(0)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             if(this.pares == 1){
                 this.control = 0;
@@ -122,7 +122,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             
         } else {
             finalMove = createGame.getPersonaPosicion(1) + move;
-            createGame.setPersonaPosicion(1,validarDado(finalMove));
+            createGame.setPersonaPosicion(1,validarDado(valor));
             log(createGame.getPersonaNombre(1)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);            
             if(this.pares == 1){
                 this.control = 1;
@@ -339,11 +339,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     }
     //--------------setear el dinero del jugador---------------------------------------//
     public void setDinero(){
-        System.out.println("Vloar: "+this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
     }
     public void setDineroPropiedad(){
-        this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());
+        if(this.createGame.getJugador(this.getCurrentPosition()).getDinero()>=this.createGame.getPropiedades(this.getCurrentProperty()).getCosto()){
+            this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());        
+        }else {
+            log("No hay los fondos suficientes para comprar la propiedad");
+        }
     }
     public void setDinero(int valor){
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-valor);

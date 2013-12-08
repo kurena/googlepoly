@@ -68,8 +68,8 @@ public class Main {
     
     public void createAndAskNames(){
         //Se llena la variable con datos estaticos
-        this.jugador[0]= new Jugador("",0,1500);
-        this.jugador[1]= new Jugador("",0,1500);
+        this.jugador[0]= new Jugador("",0,150);
+        this.jugador[1]= new Jugador("",0,150);
         //Llamada al metodo para solicitar nombres
         askNames(this.jugador);   
     }
