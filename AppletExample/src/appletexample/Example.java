@@ -18,6 +18,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         Main createGame=new Main();
         private int control= 0;
         private int pares = 0;
+        private int iniciar = 0;
+        private int resul1 =0;
+        private int resul2 =0;
         private int movimiento;
        
     @Override
@@ -452,11 +455,45 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     jLabel12.setIcon(image.gifDado(numDado2));
                     int Resultado = numDado+numDado2;
                     movimiento = numDado+numDado2;
-                    jLabel5.setText("Espacios a mover: "+Resultado);
-                    if(numDado == numDado2){
-                        pares = 1;
+                    if(iniciar == 1){
+                        jLabel5.setText("Resultado 1 : "+Resultado);
+                        resul1=Resultado;
+                        iniciar=2;
+                        lanzar.setEnabled(true);
+                        log(createGame.getNameJug(0)+" obtuvo "+Resultado);
+                        
                     }
-                    clickLanzar(Resultado);
+                    else if(iniciar==2){
+                        lanzar.setEnabled(true);
+                        jLabel5.setText("Resultado 2 : "+Resultado);
+                        log(createGame.getNameJug(1)+" obtuvo "+Resultado);
+                        resul2=Resultado;
+                        iniciar=0;
+                        if(resul1>resul2){
+                            control=0;
+                            log(createGame.getNameJug(0)+" inicia el juego!");
+                        }
+                        if(resul1<resul2){
+                            log(createGame.getNameJug(1)+" inicia el juego!");
+                            control=1;
+                        }
+                        if(resul1==resul2){
+                            log("Empates a lanzar los dados de nuevo!");
+                            iniciar=1;
+                            
+                        }
+                    }
+                    else if(iniciar ==0){
+                        
+                        if(numDado == numDado2){
+                        pares = 1;
+                        }
+                        jLabel5.setText("Espacios a mover: "+Resultado);
+                        clickLanzar(Resultado);
+                    }
+                    
+                    
+                    
                 }
             });
             //Start y delay entre animaciones
@@ -934,11 +971,13 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         }    
         
         if (buttonID.equals("Jugar")){
-            log("El Juego ha iniciado");
+            log("A lanzar los dados para determinar quien inicia el juego!");
             startGame();
             jugar.setEnabled(false);
             ableAll();
             putChips();
+            lanzar.setEnabled(true);
+            this.iniciar = 1;
         }
         
         if (buttonID.equals("Lanzar")){
