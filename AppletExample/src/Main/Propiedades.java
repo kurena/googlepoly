@@ -16,12 +16,15 @@ public class Propiedades extends Persona{
     private int posY;
     private int cantHoteles;
     private int cantCasas;
+    private int cantCondominios;
+    private int cantResidenciales;
     private int hipotecaPrecio;
     private int renta;
     private String dueño;
     private String nombreP;
     private String tipo;
     private int PrecioCasa;
+    private int precioResidencial;
     private int precioHotel;
     private int precioCondiminio;
     
@@ -29,19 +32,23 @@ public class Propiedades extends Persona{
         super();
     }
     
-    public Propiedades(int costo, String dueño, int posX, int posY, int cantHoteles, int cantCasas, int hipotecaPrecio, int renta,String nombre, String tipo, int PrecioCasa, int precioHotel){
+    public Propiedades(int costo, String dueño, int posX, int posY, int cantHoteles, int cantCasas, int cantResidenciales, int cantCondominios,int hipotecaPrecio, int renta,String nombre, String tipo, int PrecioCasa, int precioHotel,int precioResidencial,int precioCondomino){
         super(dueño);
         this.costo = costo;
         this.posX = posX;
         this.posY = posY;
         this.cantHoteles = cantHoteles;
         this.cantCasas = cantCasas;
+        this.cantResidenciales = cantResidenciales;
+        this.cantCondominios = cantCondominios;
         this.hipotecaPrecio = hipotecaPrecio;
         this.renta = renta;
         this.nombreP = nombre;
         this.tipo = tipo;
         this.precioHotel = precioHotel;
         this.PrecioCasa = PrecioCasa;
+        this.precioResidencial = precioResidencial;
+        this.precioCondiminio = precioCondomino;
     }
     
     public int getPosX(){
@@ -62,6 +69,21 @@ public class Propiedades extends Persona{
     
     public int getCantCasas(){
        return this.cantCasas;
+    }
+    public void setCantResidenciales(int residenciales){
+       this.cantResidenciales = residenciales;
+    }
+    
+    public int getCantResidenciales(){
+       return this.cantResidenciales;
+    }
+    
+    public void setCantCondominios(int condominios){
+       this.cantHoteles = condominios;
+    }
+    
+    public int getCantCondominios(){
+       return this.cantHoteles;
     }
     
     public void setCantHoteles(int hoteles){
@@ -94,6 +116,14 @@ public class Propiedades extends Persona{
     
     public int getRentaCasas(){
         return (this.PrecioCasa * this.cantCasas);
+    }
+    
+    public int getRentaResidenciales(){
+        return (this.precioResidencial * this.cantResidenciales);
+    }
+    
+    public int getRentaCondominios(){
+        return (this.precioCondiminio * this.cantCondominios);
     }
     
     public int getRentaHoteles(){

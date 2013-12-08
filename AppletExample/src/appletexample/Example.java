@@ -17,6 +17,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         Persona persona[] = new Persona[2];  
         Main createGame=new Main();
         private int control= 0;
+        private int pares = 0;
         private int movimiento;
        
     @Override
@@ -106,14 +107,25 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             createGame.setPersonaPosicion(0,validarDado(finalMove));
             log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             updateChip(1,createGame.getPersonaPosicion(0));
-            this.control=1;
+            if(this.pares == 1){
+                this.control = 0;
+                this.pares = 0;
+            }
+            else
+                this.control=1;
             
         } else {
             finalMove = createGame.getPersonaPosicion(1) + move;
             createGame.setPersonaPosicion(1,validarDado(finalMove));
             log(createGame.getPersonaNombre(this.returnControl())+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             updateChip(0,createGame.getPersonaPosicion(1));
-            this.control=0;
+            
+            if(this.pares == 1){
+                this.control = 1;
+                this.pares = 0;
+            }
+            else
+                this.control=0;
         }
         
     }//cerrar clicklnzar
@@ -266,6 +278,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     
     //-------------------------------------------- validar datos de propiedad------------------------//
     public void validarPropiedad(){
+        
         String dueño = this.createGame.getPropiedades(this.getCurrentProperty()).getDueño();
         String tipo = this.createGame.getPropiedades(this.getCurrentProperty()).getType();
         String[] opcionesIniciales = {"Comprar", "Avanzar"};
@@ -342,14 +355,23 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     public void showMoreOptions(){
         //Options for the combo box dialog
         String[] choicesCasa = {"Agregar Casa", "Mejorar Propiedad", "Avanzar"};
-        String[] choicesHotel = {"Agregar Casa", "Agregar hotel","Mejorar Propiedad", "Avanzar"};
-        String[] choicesCondominio = {"Agregar Casa", "Agregar hotel","Agregar Condominio","Mejorar Propiedad","Avanzar"};
+        String[] choicesResidencial = {"Agregar Casa", "Agregar Residencial","Mejorar Propiedad","Avanzar"};
+        String[] choicesCondominio = {"Agregar Casa", "Agregar Residencial","Agregar Condominio","Mejorar Propiedad","Avanzar"};
+        String[] choicesHotel = {"Agregar Casa", "Agregar Residencial","Agregar Condominio","Agregar Hotel","Mejorar Propiedad", "Avanzar"};
+        
+        
         String[] finalChoice =choicesCasa;
         if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas() <=0){
             finalChoice=choicesCasa;
         }  else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas()>0){
-            finalChoice = choicesHotel;
-        }  
+            finalChoice = choicesResidencial;
+            }
+            else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()>0){
+                finalChoice = choicesCondominio;
+            } 
+            else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()>0){
+                finalChoice = choicesHotel;
+            } 
         String picked = (String)JOptionPane.showInputDialog(this, "Seleccione una opcion", "Opciones de propiedad", JOptionPane.INFORMATION_MESSAGE, null, finalChoice, finalChoice[0]);
         secondAction(picked);
     }
@@ -360,11 +382,18 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             this.createGame.getPropiedades(this.getCurrentProperty()).setCantCasas(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas() +1);
             log("Una Casa ha sido comprada, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas()+" casa(s)");
 
-        } else 
-            if (texto.equals("Agregar hotel")){
+        } else if (texto.equals("Agregar Hotel")){
                 this.createGame.getPropiedades(this.getCurrentProperty()).setCantHoteles(this.createGame.getPropiedades(this.getCurrentProperty()).getCantHoteles()+1);
                 log("Un Hotel ha sido comprado, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantHoteles()+" hotel(es)");
             }
+        else if(texto.equals("Agregar Condominio")){
+            this.createGame.getPropiedades(this.getCurrentProperty()).setCantHoteles(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()+1);
+            log("Un Condominio ha sido comprado, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()+" condominio(s)");
+        }
+        else if(texto.equals("Agregar Residencial")){
+            this.createGame.getPropiedades(this.getCurrentProperty()).setCantHoteles(this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()+1);
+            log("Un Residencial ha sido comprado, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()+" residencial(es)");
+        }
     }
     
     
@@ -424,6 +453,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                     int Resultado = numDado+numDado2;
                     movimiento = numDado+numDado2;
                     jLabel5.setText("Espacios a mover: "+Resultado);
+                    if(numDado == numDado2){
+                        pares = 1;
+                    }
                     clickLanzar(Resultado);
                 }
             });
@@ -522,6 +554,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -555,7 +589,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         More.setContentAreaFilled(false);
         More.setEnabled(false);
 
-        table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
+        table.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/googolopoly.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
