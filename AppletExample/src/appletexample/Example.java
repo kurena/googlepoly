@@ -103,21 +103,19 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     //---------------------------------cuando hace click en lanzar-------------------------//
     public void clickLanzar(int valor){
        int move = valor;
-       valor = 6;
+      // valor = 7;
        int finalMove;
         if(this.control == 0){
             finalMove = createGame.getPersonaPosicion(0) + move;
             createGame.setPersonaPosicion(0,validarDado(finalMove));
             log(createGame.getPersonaNombre(0)+" ha lanzado los dados, el numero de posiciones a mover es de: "+valor);
             if(this.pares == 1){
-                System.out.println("Entro a los pares1");
                 this.control = 0;
                 this.pares = 0;
                 flag=true;
             }
             else{
              this.control=1;   
-             System.out.println("NO Entro a los pares1");
              flag=false;
             }
             updateChip(1,createGame.getPersonaPosicion(0));
@@ -130,11 +128,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
                 this.control = 1;
                 this.pares = 0;
                 flag=true;
-                System.out.println("Entro a los pares2");
             }
             else{
              this.control=0;   
-             System.out.println("no Entro a los pares2");
              flag=false;
             }
             updateChip(0,createGame.getPersonaPosicion(1));
@@ -298,7 +294,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
               //  log();
             //}
         int posicionActual = this.createGame.getPersonaPosicion(this.getCurrentPosition());
-        System.out.println("Dueno: "+this.createGame.getPropiedades(posicionActual).getDueño());
         if(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño()=="" && tipo =="PROPIEDAD"){
                     log(this.createGame.getNameJug(this.getCurrentPosition())+", seleccione una opcion de las habilitadas.");
                     Avanzar.setEnabled(true);
@@ -310,6 +305,8 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         if(dueño!="" && dueño != getCurrentPlayerName()){
                 setDinero();
                 log(this.createGame.getNameJug(this.getCurrentPosition())+" debe de pagar: "+this.createGame.getPropiedades(this.getCurrentProperty()).getRenta()+" por el alquiler de la propiedad");
+                setDineroNew();
+                this.updateNewMoney();
                 this.updateMoney();
                 Avanzar.setEnabled(true);
                 More.setEnabled(false);
@@ -325,12 +322,11 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     public void accion(String Accions){
         String dueño = this.createGame.getPropiedades(this.getCurrentProperty()).getDueño();
         String tipo = this.createGame.getPropiedades(this.getCurrentProperty()).getType();
-        System.out.println(tipo);
         if(Accions.equals("Comprar")){
             if(dueño =="" && tipo=="PROPIEDAD"){
                 this.createGame.getPropiedades(this.getCurrentProperty()).setDueño(this.createGame.getJugador(this.returnControl()).getNombreP());
                 this.setDineroPropiedad();
-                log(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño() +" ha comprado a la propiedad: "+this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
+                log(this.createGame.getPropiedades(this.getCurrentProperty()).getDueño() +" ha comprado a la propiedad: "+this.createGame.getPropiedades(this.getCurrentProperty()).getNombre()+" en: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCosto());
                 this.updateMoney();
                 this.createGame.getJugador(this.getCurrentPosition()).setCantPropiedades(this.createGame.getPropiedades(this.getCurrentProperty()).getNombre());
                 this.updatePropiedades();
@@ -343,6 +339,7 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     }
     //--------------setear el dinero del jugador---------------------------------------//
     public void setDinero(){
+        System.out.println("Vloar: "+this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
     }
     public void setDineroPropiedad(){
@@ -355,6 +352,9 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()+valor);
     }
     
+    public void setDineroNew(){
+        this.createGame.getJugador(this.control).setDinero( this.createGame.getJugador(this.control).getDinero()+this.createGame.getPropiedades(this.getCurrentProperty()).getRenta());
+    }
     public void addPropiedad(String nombre){
         this.createGame.getJugador(this.getCurrentPosition()).setCantPropiedades(nombre);
     }
@@ -372,17 +372,23 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         String[] choicesHotel = {"Agregar Casa", "Agregar Residencial","Agregar Condominio","Agregar Hotel","Mejorar Propiedad", "Avanzar"};
         
         String[] finalChoice =choicesCasa;
-        if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas() <=0){
-            finalChoice=choicesCasa;
-        }  else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas()>0){
-            finalChoice = choicesResidencial;
-            }
-            else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()>0){
+        if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas() >0){
+            finalChoice=choicesResidencial;
+            if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()>0){
                 finalChoice = choicesCondominio;
+            }
+            if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()>0){
+                finalChoice = choicesHotel;
             } 
+        }  else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()>0){
+            finalChoice = choicesCondominio;
+            }
             else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()>0){
                 finalChoice = choicesHotel;
             } 
+            //else if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()>0){
+              //  finalChoice = choicesHotel;
+            //} 
         String picked = (String)JOptionPane.showInputDialog(this, "Seleccione una opcion", "Opciones de propiedad", JOptionPane.INFORMATION_MESSAGE, null, finalChoice, finalChoice[0]);
         secondAction(picked);
     }
@@ -438,6 +444,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
              dinero2.setText("Dinero Actual:"+this.createGame.getJugador(1).getDinero());
         }
     }
+    
+    public void updateNewMoney(){
+        if(this.getCurrentPosition()==0){
+             dinero2.setText("Dinero Actual:"+this.createGame.getJugador(1).getDinero());
+        } else {
+             dinero.setText("Dinero Actual:"+this.createGame.getJugador(0).getDinero());
+        }
+    }
     //--------------------------------------actualizar la cantidad de propiedades-------------------------//
     public void updatePropiedades(){
         if(this.getCurrentPosition()==0){
@@ -449,8 +463,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     
     //-------------------------Obtener la posicion de la ficha de la persona-------------//
     public int getCurrentProperty(){
-        System.out.println("Buscar en; "+this.returnControl());
-        System.out.println("Buscar en; "+this.control);
         return this.createGame.getPersonaPosicion(this.returnControl());
     }
     

@@ -30,7 +30,7 @@ public class Main {
         arregloPropiedadades[4] = new Propiedades(15, "", 295,500,0,0,0,0,0,0,"Impuestos Servidor", "IMPUESTOS15",0,0,0,0);
         arregloPropiedadades[5] = new Propiedades(20, "", 240,500,0,0,0,0,0,0,"Plaforma Movil", "BONUS",0,0,0,0);
         arregloPropiedadades[6] = new Propiedades(120, "", 180,500,0,0,0,0,50,70,"Blogspot", "PROPIEDAD",100,200,300,300);
-        arregloPropiedadades[7] = new Propiedades(130, "", 120,500,0,0,0,0,65,80,"JotSpot", "Propiedad",100,200,300,300);
+        arregloPropiedadades[7] = new Propiedades(130, "", 120,500,0,0,0,0,65,80,"JotSpot", "PROPIEDAD",100,200,300,300);
         arregloPropiedadades[8] = new Propiedades(0, "", 65,500,0,0,0,0,0,0,"Dead Pool", "CARCEL",0,0,0,0);
         arregloPropiedadades[9] = new Propiedades(210, "", 40,410,0,0,0,0,100,150,"Youtube", "PROPIEDAD",100,200,300,300);
         arregloPropiedadades[10] = new Propiedades(210, "", 40,360,0,0,0,0,100,150,"Twitter", "PROPIEDAD",100,200,300,300);

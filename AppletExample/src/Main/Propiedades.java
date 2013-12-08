@@ -119,6 +119,18 @@ public class Propiedades extends Persona{
     }
     
     public int getRenta(){
+        if(this.getCantCasas()>0){
+            this.renta= this.getRentaCasas();
+        } 
+        if(this.getCantResidenciales()>0){
+            this.renta = this.getRentaResidenciales();
+        }
+        if(this.getCantCondominios()>0){
+            this.renta=this.getRentaCondominios();            
+        } 
+        if(this.getCantHoteles()>0){
+            this.renta=this.getRentaHoteles();
+        }
        return this.renta;
     }
     
@@ -135,23 +147,20 @@ public class Propiedades extends Persona{
     }
     
     public int getRentaCasas(){
-        this.renta = (this.PrecioCasa/2 * this.cantCasas);
-        return (this.PrecioCasa/2 * this.cantCasas);
+        return ((this.PrecioCasa/2) * this.cantCasas);
     }
     
     public int getRentaResidenciales(){
-        this.renta = (this.precioResidencial/2 * this.cantResidenciales);
-        return (this.precioResidencial/2 * this.cantResidenciales);
+        return ((this.precioResidencial/2) * this.cantResidenciales);
     }
     
     public int getRentaCondominios(){
-        this.renta =(this.precioCondiminio/2 * this.cantCondominios);
-        return (this.precioCondiminio/2 * this.cantCondominios);
+        return ((this.precioCondiminio/2) * this.cantCondominios);
     }
     
     public int getRentaHoteles(){
-        this.renta = (this.precioHotel/2 * this.cantHoteles);
-        return (this.precioHotel/2 * this.cantHoteles);
+        System.out.println(this.cantHoteles);
+        return ((this.precioHotel/2) * this.cantHoteles);
     }
     
     public String getType(){
