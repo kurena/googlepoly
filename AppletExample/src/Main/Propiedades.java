@@ -50,6 +50,26 @@ public class Propiedades extends Persona{
         this.precioResidencial = precioResidencial;
         this.precioCondiminio = precioCondomino;
     }
+
+    public String getTipo() {
+        return this.tipo;
+    }
+
+    public int getPrecioCasa() {
+        return this.PrecioCasa;
+    }
+
+    public int getPrecioResidencial() {
+        return this.precioResidencial;
+    }
+
+    public int getPrecioHotel() {
+        return this.precioHotel;
+    }
+
+    public int getPrecioCondiminio() {
+        return this.precioCondiminio;
+    }
     
     public int getPosX(){
         return this.posX;
@@ -115,19 +135,23 @@ public class Propiedades extends Persona{
     }
     
     public int getRentaCasas(){
-        return (this.PrecioCasa * this.cantCasas);
+        this.renta = (this.PrecioCasa/2 * this.cantCasas);
+        return (this.PrecioCasa/2 * this.cantCasas);
     }
     
     public int getRentaResidenciales(){
-        return (this.precioResidencial * this.cantResidenciales);
+        this.renta = (this.precioResidencial/2 * this.cantResidenciales);
+        return (this.precioResidencial/2 * this.cantResidenciales);
     }
     
     public int getRentaCondominios(){
-        return (this.precioCondiminio * this.cantCondominios);
+        this.renta =(this.precioCondiminio/2 * this.cantCondominios);
+        return (this.precioCondiminio/2 * this.cantCondominios);
     }
     
     public int getRentaHoteles(){
-        return (this.precioHotel * this.cantHoteles);
+        this.renta = (this.precioHotel/2 * this.cantHoteles);
+        return (this.precioHotel/2 * this.cantHoteles);
     }
     
     public String getType(){

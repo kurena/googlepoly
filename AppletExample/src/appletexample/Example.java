@@ -362,7 +362,6 @@ public class Example extends javax.swing.JApplet implements ActionListener {
         String[] choicesCondominio = {"Agregar Casa", "Agregar Residencial","Agregar Condominio","Mejorar Propiedad","Avanzar"};
         String[] choicesHotel = {"Agregar Casa", "Agregar Residencial","Agregar Condominio","Agregar Hotel","Mejorar Propiedad", "Avanzar"};
         
-        
         String[] finalChoice =choicesCasa;
         if(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas() <=0){
             finalChoice=choicesCasa;
@@ -381,21 +380,25 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     
     //-------------------------------funcion para el caluclo de alquiler de acuerdo a casa y hotel---------------/
     public void secondAction(String texto){
+        int dinero;
         if(texto.equals("Agregar Casa")){
             this.createGame.getPropiedades(this.getCurrentProperty()).setCantCasas(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas() +1);
             log("Una Casa ha sido comprada, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantCasas()+" casa(s)");
-
+            this.setDineroExtra(this.createGame.getPropiedades(this.getCurrentProperty()).getPrecioCasa());
         } else if (texto.equals("Agregar Hotel")){
                 this.createGame.getPropiedades(this.getCurrentProperty()).setCantHoteles(this.createGame.getPropiedades(this.getCurrentProperty()).getCantHoteles()+1);
                 log("Un Hotel ha sido comprado, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantHoteles()+" hotel(es)");
-            }
+                this.setDineroExtra(this.createGame.getPropiedades(this.getCurrentProperty()).getPrecioHotel());
+        }
         else if(texto.equals("Agregar Condominio")){
             this.createGame.getPropiedades(this.getCurrentProperty()).setCantHoteles(this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()+1);
             log("Un Condominio ha sido comprado, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantCondominios()+" condominio(s)");
+            this.setDineroExtra(this.createGame.getPropiedades(this.getCurrentProperty()).getPrecioCondiminio());
         }
         else if(texto.equals("Agregar Residencial")){
             this.createGame.getPropiedades(this.getCurrentProperty()).setCantHoteles(this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()+1);
             log("Un Residencial ha sido comprado, esta propiedad posee: "+this.createGame.getPropiedades(this.getCurrentProperty()).getCantResidenciales()+" residencial(es)");
+            this.setDineroExtra(this.createGame.getPropiedades(this.getCurrentProperty()).getPrecioResidencial());
         }
     }
     
@@ -409,6 +412,14 @@ public class Example extends javax.swing.JApplet implements ActionListener {
     public int getNextPlayer(){
         return this.control;
     }
+    
+    //-------------------------------------------------Reducirdinero de los hoteles y eso
+    public void setDineroExtra(int dinero){
+        log("Ademas, se ha rebajado $"+dinero+" a "+this.createGame.getJugador(this.getCurrentPosition()).getNombre()+" por su compra");
+        this.createGame.getJugador(this.getCurrentPosition()).setDinero(this.createGame.getJugador(this.getCurrentPosition()).getDinero()-dinero);
+    }
+    
+    
     //---------------------------------------- actualizar el dinero----------------------------------------//
     public void updateMoney(){
         if(this.getCurrentPosition()==0){
